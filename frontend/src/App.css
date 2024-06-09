@@ -1,0 +1,459 @@
+@import url("https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap");
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Poppins", sans-serif;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+}
+
+.App {
+  width: 100vw;
+  height: auto;
+  display: flex;
+  align-items: center;
+  padding-top: 10px;
+  flex-direction: column;
+  background-image: url("./images/Background.jpg");
+  background-size: cover;
+  background-attachment: fixed;
+  background-repeat: no-repeat;
+}
+
+/* PAGE NOT FOUND */
+
+.PNFpage {
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.header,
+.subheader {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.header {
+  margin-top: -100px;
+}
+
+.subheader {
+  margin-top: -50px;
+}
+
+/* BROWSE TUTEE PAGE CSS */
+
+.post {
+  width: 400px;
+  height: 300px;
+  border-radius: 10px;
+  display: flex;
+  flex-direction: column;
+  margin-top: 50px;
+  box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+  transition: box-shadow 0.5s;
+  border-top-left-radius: 20px;
+  border-top-right-radius: 20px;
+  border-bottom-left-radius: 20px;
+  border-bottom-right-radius: 20px;
+}
+
+.post:hover {
+  box-shadow: 0px 0px 200px 0.5px palegoldenrod;
+  cursor: pointer;
+}
+
+.post .title {
+  flex: 20%;
+  background-color: dodgerblue;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  place-content: center;
+  color: white;
+  padding: 20px;
+  border-top-left-radius: 20px;
+  border-top-right-radius: 20px;
+  position: relative;
+}
+
+.delete {
+  cursor: pointer;
+  position: absolute;
+  top: 50%;
+  right: 20px;
+  transform: translateY(-50%);
+  color: white;
+}
+
+.delete:hover {
+  color: #162938;
+}
+
+.post .body {
+  flex: 60%;
+  display: grid;
+  place-content: center;
+  padding: 20px;
+  background-color: white;
+}
+
+.post .footer {
+  flex: 20%;
+  display: flex;
+  align-items: center;
+  padding-left: 15px;
+  background-color: dodgerblue;
+  color: white;
+  border-bottom-left-radius: 20px;
+  border-bottom-right-radius: 20px;
+  padding: 20px;
+}
+
+.footer .username {
+  flex: 50%;
+}
+.footer .buttons {
+  flex: 50%;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+}
+
+.likeBttn {
+  color: rgba(250, 250, 250, 0.8);
+}
+.unlikeBttn {
+  color: rgb(237, 16, 16);
+}
+
+.buttons {
+  margin-right: 10px;
+}
+
+.number {
+  width: 20px;
+}
+
+/* REQUEST TUTOR PAGE CSS */
+
+.requestTutorPage {
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.requestTutorFormContainer {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  width: 500px;
+  height: auto;
+  padding: 20px;
+  border: 5px solid dodgerblue;
+  border-radius: 10px;
+  background-color: transparent;
+  backdrop-filter: blur(5px);
+  margin-top: -380px;
+}
+
+.requestTutorFormContainer #inputRequestTutor {
+  width: 450px;
+  height: 40px;
+  margin-top: 10px;
+  margin-bottom: 10px;
+  border: 2px solid grey;
+  border-radius: 5px;
+  padding-left: 10px;
+  font-size: 18px;
+  transform: translateX(-10px);
+}
+
+.requestTutorFormContainer input,
+button {
+  width: 200px;
+  height: 50px;
+  border-radius: 8px;
+  border: none;
+  margin: 10px;
+}
+
+.requestTutorFormContainer button {
+  background-color: lightskyblue;
+  color: white;
+  font-weight: 500;
+  font-size: 18px;
+}
+
+.requestTutorFormContainer button:hover {
+  cursor: pointer;
+  background-color: dodgerblue;
+}
+
+.requestTutorFormContainer input {
+  border: 2px solid grey;
+  padding-left: 10px;
+}
+
+.requestTutorButtonContainer {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+}
+
+span {
+  color: red;
+}
+
+/* NAVBAR */
+
+.navbar {
+  top: 0;
+  left: 0;
+  width: 100%;
+  padding: 30px 60px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  z-index: 99;
+}
+
+.logo-container {
+  display: flex;
+  align-items: center;
+}
+
+.logo {
+  width: 90px;
+  height: 90px;
+  border-radius: 50%;
+  margin-right: 20px;
+}
+
+.logo-text {
+  font-size: 1.8em;
+  color: #162938;
+  user-select: none;
+}
+
+.welcome-text {
+  font-size: 1.2em;
+  color: #162938;
+  user-select: none;
+  margin-left: 30px;
+}
+
+.navbar a {
+  position: relative;
+  font-size: 1.1em;
+  color: #162938;
+  text-decoration: none;
+  font-weight: 500;
+  margin-left: 40px;
+}
+
+.navbar a::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: -6px;
+  width: 100%;
+  height: 3px;
+  background: #162938;
+  border-radius: 5px;
+  transform-origin: right;
+  transform: scaleX(0);
+  transition: transform 0.5s;
+}
+
+.navbar a:hover::after {
+  transform-origin: left;
+  transform: scaleX(1);
+}
+
+.navbar button {
+  width: 65px;
+  height: 25px;
+  background-color: transparent;
+  border: none;
+  font-size: 1.1em;
+  color: #162938;
+  text-decoration: none;
+  font-weight: 500;
+  margin-left: 40px;
+  cursor: pointer;
+  padding: 0;
+  position: relative;
+}
+
+.navbar button::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: -6px;
+  width: 100%;
+  height: 3px;
+  background: #162938;
+  border-radius: 5px;
+  transform-origin: right;
+  transform: scaleX(0);
+  transition: transform 0.5s;
+}
+
+.navbar button:hover::after {
+  transform-origin: left;
+  transform: scaleX(1);
+}
+
+/* LOGIN */
+
+.loginContainer {
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.loginFormContainer {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  width: 500px;
+  height: auto;
+  padding: 20px;
+  border: 5px solid dodgerblue;
+  border-radius: 10px;
+  background-color: transparent;
+  backdrop-filter: blur(5px);
+  margin-top: -380px;
+}
+
+.loginFormContainer #inputLogin {
+  width: 450px;
+  height: 40px;
+  margin-top: 10px;
+  margin-bottom: 10px;
+  border: 2px solid grey;
+  border-radius: 5px;
+  padding-left: 10px;
+  font-size: 18px;
+  transform: translateX(-10px);
+}
+
+.loginContainer input,
+button {
+  width: 200px;
+  height: 50px;
+  border-radius: 8px;
+  border: none;
+  margin: 10px;
+}
+
+.loginContainer button {
+  background-color: lightskyblue;
+  color: white;
+  font-weight: 500;
+  font-size: 18px;
+}
+
+.loginContainer button:hover {
+  cursor: pointer;
+  background-color: dodgerblue;
+}
+
+.loginContainer input {
+  width: auto;
+  height: 40px;
+  margin-top: 10px;
+  margin-bottom: 10px;
+  border: 2px solid grey;
+  border-radius: 5px;
+  padding-left: 10px;
+  font-size: 18px;
+}
+
+.loginButtonContainer {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+}
+
+/* SIGNUP */
+
+.signupContainer {
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.signupFormContainer {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  width: 500px;
+  height: auto;
+  padding: 20px;
+  border: 5px solid dodgerblue;
+  border-radius: 10px;
+  background-color: transparent;
+  backdrop-filter: blur(5px);
+  margin-top: -380px;
+}
+
+.signupFormContainer #inputSignup {
+  width: 450px;
+  height: 40px;
+  margin-top: 10px;
+  margin-bottom: 10px;
+  border: 2px solid grey;
+  border-radius: 5px;
+  padding-left: 10px;
+  font-size: 18px;
+  transform: translateX(-10px);
+}
+
+.signupContainer input,
+button {
+  width: 200px;
+  height: 50px;
+  border-radius: 8px;
+  border: none;
+  margin: 10px;
+}
+
+.signupContainer button {
+  background-color: lightskyblue;
+  color: white;
+  font-weight: 500;
+  font-size: 18px;
+}
+
+.signupContainer button:hover {
+  cursor: pointer;
+  background-color: dodgerblue;
+}
+
+.signupContainer input {
+  border: 2px solid grey;
+  padding-left: 10px;
+}
+
+.signupButtonContainer {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+}
