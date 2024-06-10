@@ -1,7 +1,7 @@
-import React from "react";
+import React, { useEffect, useState, useContext } from "react";
 import axios from "axios";
-import { useEffect, useState, useContext } from "react";
 import { AuthContext } from "../helpers/AuthContext";
+import { Link } from "react-router-dom";
 import ThumbUpAltIcon from "@mui/icons-material/ThumbUpAlt";
 import DeleteIcon from "@mui/icons-material/Delete";
 
@@ -96,7 +96,9 @@ function BrowseTutees() {
               </div>
               <div className="body">{post.postText}</div>
               <div className="footer">
-                <div className="username">{post.username}</div>
+                <div className="username">
+                  <Link to={`/profile/${post.UserId}`}>{post.username}</Link>
+                </div>
                 <div className="buttons">
                   <ThumbUpAltIcon
                     onClick={() => {

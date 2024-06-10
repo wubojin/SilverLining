@@ -6,6 +6,7 @@ import { AuthContext } from "../helpers/AuthContext";
 function Login() {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
+  const [error, setError] = useState("");
   const { setAuthState } = useContext(AuthContext);
 
   let navigate = useNavigate();
@@ -14,7 +15,7 @@ function Login() {
     const data = { username: username, password: password };
     axios.post("http://localhost:3001/auth/login", data).then((response) => {
       if (response.data.error) {
-        alert(response.data.error);
+        setError(response.data.error);
       } else {
         localStorage.setItem("accessToken", response.data.token);
         setAuthState({
@@ -46,8 +47,9 @@ function Login() {
             setPassword(event.target.value);
           }}
         />
+        {error && <span className="errorMessage">{error}</span>}
         <div className="loginButtonContainer">
-          <button onClick={login}>Login</button>
+          <button onClick={login}>Log in</button>
         </div>
       </div>
     </div>
