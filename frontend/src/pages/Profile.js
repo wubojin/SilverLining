@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useContext } from "react";
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import { AuthContext } from "../helpers/AuthContext";
 import axios from "axios";
 import ThumbUpAltIcon from "@mui/icons-material/ThumbUpAlt";
@@ -9,129 +9,130 @@ function Profile() {
   let { id } = useParams();
   const [username, setUsername] = useState("");
   const [listOfPosts, setListOfPosts] = useState([]);
-  const [likedPosts, setLikedPosts] = useState([]);
+  const [likedPosts, setLikedPosts] = useState(new Set());
   const { authState } = useContext(AuthContext);
 
   useEffect(() => {
-    // Fetch user info
-    axios
-      .get(`http://localhost:3001/auth/basicinfo/${id}`)
-      .then((response) => {
-        setUsername(response.data.username);
-      })
-      .catch((error) => {
-        console.error("Error fetching user info:", error);
-      });
+    const fetchData = async () => {
+      try {
+        const userInfoResponse = await axios.get(
+          `http://localhost:3001/auth/basicinfo/${id}`
+        );
+        setUsername(userInfoResponse.data.username);
 
-    // Fetch posts by user ID
-    axios
-      .get(`http://localhost:3001/posts/byUserId/${id}`)
-      .then((response) => {
-        setListOfPosts(response.data || []);
-      })
-      .catch((error) => {
-        console.error("Error fetching posts:", error);
-      });
+        const postsResponse = await axios.get(
+          `http://localhost:3001/posts/byUserId/${id}`
+        );
+        setListOfPosts(postsResponse.data || []);
 
-    // Fetch likes by user ID
-    axios
-      .get(`http://localhost:3001/likes/byUserId/${id}`)
-      .then((response) => {
-        setLikedPosts(response.data.map((like) => like.PostId) || []);
-      })
-      .catch((error) => {
-        console.error("Error fetching likes:", error);
-      });
+        const likesResponse = await axios.get(
+          `http://localhost:3001/likes/byUserId/${id}`
+        );
+        setLikedPosts(new Set(likesResponse.data.map((like) => like.PostId)));
+      } catch (error) {
+        console.error("Error fetching data:", error);
+      }
+    };
+
+    fetchData();
   }, [id]);
 
-  const deletePost = (id) => {
+  const deletePost = (postId) => {
     axios
-      .delete(`http://localhost:3001/posts/${id}`, {
+      .delete(`http://localhost:3001/posts/${postId}`, {
         headers: { accessToken: localStorage.getItem("accessToken") },
       })
       .then(() => {
-        setListOfPosts(listOfPosts.filter((val) => val.id !== id));
+        setListOfPosts(listOfPosts.filter((val) => val.id !== postId));
       })
       .catch((error) => {
         console.error("Error deleting post:", error);
       });
   };
 
-  const likePost = (postId) => {
-    axios
-      .post(
+  const likePost = async (postId) => {
+    try {
+      const response = await axios.post(
         "http://localhost:3001/likes",
         { PostId: postId },
         { headers: { accessToken: localStorage.getItem("accessToken") } }
-      )
-      .then((response) => {
-        setListOfPosts(
-          listOfPosts.map((post) => {
-            if (post.id === postId) {
-              if (response.data.liked) {
-                return { ...post, Likes: [...post.Likes, 0] };
-              } else {
-                const likesArray = post.Likes;
-                likesArray.pop();
-                return { ...post, Likes: likesArray };
-              }
-            } else {
-              return post;
-            }
-          })
-        );
+      );
 
-        if (likedPosts.includes(postId)) {
-          setLikedPosts(likedPosts.filter((id) => id !== postId));
+      setListOfPosts((prevPosts) =>
+        prevPosts.map((post) => {
+          if (post.id === postId) {
+            const updatedLikes = response.data.liked
+              ? [...post.Likes, 0]
+              : post.Likes.slice(0, -1);
+
+            return { ...post, Likes: updatedLikes };
+          } else {
+            return post;
+          }
+        })
+      );
+
+      setLikedPosts((prevLikedPosts) => {
+        const updatedLikedPosts = new Set(prevLikedPosts);
+        if (updatedLikedPosts.has(postId)) {
+          updatedLikedPosts.delete(postId);
         } else {
-          setLikedPosts([...likedPosts, postId]);
+          updatedLikedPosts.add(postId);
         }
-      })
-      .catch((error) => {
-        console.error("Error liking post:", error);
+        return updatedLikedPosts;
       });
+    } catch (error) {
+      console.error("Error liking post:", error);
+    }
   };
 
+  let navigate = useNavigate();
+
   return (
-    <div className="profilePageContainer">
+    <div className="profilePage">
       <div className="basicInfo">
         <h1>Username: {username}</h1>
+        {authState.username === username && (
+          <div className="changePasswordButtonContainer">
+            <button onClick={() => navigate("/changepassword")}>
+              {" "}
+              Change password
+            </button>
+          </div>
+        )}
       </div>
       <div className="listOfPosts">
-        {listOfPosts.length > 0 &&
-          listOfPosts
-            .slice()
-            .reverse()
-            .map((post, key) => (
-              <div className="post" key={key}>
-                <div className="title">
-                  {post.title}{" "}
-                  {authState.username === post.username && (
-                    <DeleteIcon
-                      onClick={() => deletePost(post.id)}
-                      className="delete"
-                    />
-                  )}
+        {listOfPosts
+          .slice()
+          .reverse()
+          .map((post, key) => (
+            <div className="post" key={key}>
+              <div className="title">
+                {post.title}{" "}
+                {authState.username === post.username && (
+                  <DeleteIcon
+                    onClick={() => deletePost(post.id)}
+                    className="delete"
+                  />
+                )}
+              </div>
+              <div className="body">{post.postText}</div>
+              <div className="footer">
+                <div className="username">{post.username}</div>
+                <div className="buttons">
+                  <ThumbUpAltIcon
+                    onClick={() => likePost(post.id)}
+                    className={
+                      likedPosts.has(post.id) ? "likedBttn" : "unlikeBttn"
+                    }
+                  />
                 </div>
-                <div className="body">{post.postText}</div>
-                <div className="footer">
-                  <div className="username">{post.username}</div>
-                  <div className="buttons">
-                    <ThumbUpAltIcon
-                      onClick={() => likePost(post.id)}
-                      className={
-                        likedPosts.includes(post.id)
-                          ? "likedBttn"
-                          : "unlikeBttn"
-                      }
-                    />
-                  </div>
-                  <div className="number">
-                    <label>{post.Likes.length}</label>
-                  </div>
+                <div className="number">
+                  <label>{post.Likes.length}</label>
                 </div>
               </div>
-            ))}
+            </div>
+          ))}
       </div>
     </div>
   );

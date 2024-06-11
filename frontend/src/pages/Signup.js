@@ -10,6 +10,7 @@ function Signup() {
   const initialValues = {
     username: "",
     password: "",
+    confirmPassword: "",
   };
 
   let navigate = useNavigate();
@@ -26,43 +27,88 @@ function Signup() {
   };
 
   const validationSchema = Yup.object().shape({
-    username: Yup.string().min(3).max(15).required(),
-    password: Yup.string().min(4).max(20).required(),
+    username: Yup.string()
+      .min(3, "Username must be at least 3 characters")
+      .max(15, "Username must be at most 15 characters")
+      .required("Username is required"),
+    password: Yup.string()
+      .min(4, "Password must be at least 4 characters")
+      .max(20, "Password must be at most 20 characters")
+      .required("Password is required"),
+    confirmPassword: Yup.string()
+      .oneOf([Yup.ref("password"), null], "Passwords must match")
+      .required("Confirm password is required"),
   });
 
   return (
-    <div className="signupContainer">
+    <div className="signupPage">
       <Formik
         initialValues={initialValues}
         onSubmit={onSubmit}
         validationSchema={validationSchema}
       >
-        {(
-          { setFieldValue } // Destructure setFieldValue from Formik props
-        ) => (
+        {({ setFieldValue }) => (
           <Form className="signupFormContainer">
-            <label>Username: </label>
-            {error && <span className="errorMessage">{error}</span>}
-            <ErrorMessage name="username" component="span" />
-            <Field
-              autoComplete="off"
-              id="inputSignup"
-              name="username"
-              placeholder="(Eg. user123)"
-              onChange={(event) => {
-                setError(""); // Clear error message when username input changes
-                setFieldValue("username", event.target.value);
-              }}
-            />
-            <label>Password: </label>
-            <ErrorMessage name="password" component="span" />
-            <Field
-              autoComplete="off"
-              type="password"
-              id="inputSignup"
-              name="password"
-              placeholder="Your password..."
-            />
+            <div>
+              <label htmlFor="username">Username:</label>
+              {error && <div className="errorMessage">{error}</div>}
+              <ErrorMessage
+                name="username"
+                component="div"
+                className="errorMessage"
+              />
+              <Field
+                autoComplete="off"
+                id="inputSignup"
+                name="username"
+                placeholder="(Eg. user123)"
+                onChange={(event) => {
+                  setError("");
+                  setFieldValue("username", event.target.value);
+                }}
+              />
+            </div>
+
+            <div>
+              <label htmlFor="password">Password:</label>
+              <ErrorMessage
+                name="password"
+                component="div"
+                className="errorMessage"
+              />
+              <Field
+                autoComplete="off"
+                type="password"
+                id="inputSignup"
+                name="password"
+                placeholder="Your password..."
+                onChange={(event) => {
+                  setError("");
+                  setFieldValue("password", event.target.value);
+                }}
+              />
+            </div>
+
+            <div>
+              <label htmlFor="confirmPassword">Confirm password:</label>
+              <ErrorMessage
+                name="confirmPassword"
+                component="div"
+                className="errorMessage"
+              />
+              <Field
+                autoComplete="off"
+                type="password"
+                id="inputSignup"
+                name="confirmPassword"
+                placeholder="Confirm your password..."
+                onChange={(event) => {
+                  setError("");
+                  setFieldValue("confirmPassword", event.target.value);
+                }}
+              />
+            </div>
+
             <div className="signupButtonContainer">
               <button type="submit">Sign up</button>
             </div>

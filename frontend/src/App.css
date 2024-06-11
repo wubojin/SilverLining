@@ -10,6 +10,10 @@
 body {
   margin: 0;
   padding: 0;
+  background-image: url("./images/Background.jpg");
+  background-size: cover;
+  background-attachment: fixed;
+  background-repeat: no-repeat;
 }
 
 .App {
@@ -17,19 +21,15 @@ body {
   height: auto;
   display: flex;
   align-items: center;
-  padding-top: 10px;
+  padding-top: 200px;
   flex-direction: column;
-  background-image: url("./images/Background.jpg");
-  background-size: cover;
-  background-attachment: fixed;
-  background-repeat: no-repeat;
 }
 
 /* PAGE NOT FOUND */
 
 .PNFpage {
-  width: 100vw;
-  height: 100vh;
+  width: auto;
+  height: auto;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -51,7 +51,259 @@ body {
   margin-top: -50px;
 }
 
-/* BROWSE TUTEE PAGE CSS */
+/* NAVBAR */
+
+.navbar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  padding: 20px 30px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  z-index: 99;
+  background-image: url("./images/Background.jpg");
+  background-size: cover;
+  background-attachment: fixed;
+  background-repeat: no-repeat;
+}
+
+.navbar .username-link {
+  text-decoration: none;
+  color: inherit;
+}
+
+.navbar .username-link:hover {
+  text-decoration: none;
+  color: inherit;
+}
+
+.logo-container {
+  display: flex;
+  align-items: center;
+}
+
+.logo {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  margin-right: 15px;
+}
+
+.logo-text {
+  font-size: 1.4em;
+  color: #162938;
+  user-select: none;
+}
+
+.logo-text a {
+  text-decoration: none;
+  color: inherit;
+  cursor: pointer;
+}
+
+.welcome-text {
+  font-size: 1em;
+  color: #162938;
+  user-select: none;
+  margin-left: 30px;
+}
+
+.links a {
+  position: relative;
+  font-size: 1em;
+  color: #162938;
+  text-decoration: none;
+  font-weight: 500;
+  margin-left: 30px;
+}
+
+.links a::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: -6px;
+  width: 100%;
+  height: 3px;
+  background: rgba(22, 41, 56, 0.7);
+  border-radius: 5px;
+  transform-origin: right;
+  transform: scaleX(0);
+  transition: transform 0.5s;
+}
+
+.links a:hover::after {
+  transform-origin: left;
+  transform: scaleX(1);
+}
+
+.links a.active::after {
+  background-color: #162938;
+  transform-origin: left;
+  transform: scaleX(1);
+}
+
+.navbar button {
+  width: 65px;
+  height: 25px;
+  background-color: transparent;
+  border: none;
+  font-size: 1em;
+  color: #162938;
+  text-decoration: none;
+  font-weight: 500;
+  margin-left: 30px;
+  cursor: pointer;
+  padding: 0;
+  position: relative;
+}
+
+.navbar button::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: -6px;
+  width: 100%;
+  height: 3px;
+  background: rgba(22, 41, 56, 0.7);
+  border-radius: 5px;
+  transform-origin: right;
+  transform: scaleX(0);
+  transition: transform 0.5s;
+}
+
+.navbar button:hover::after {
+  transform-origin: left;
+  transform: scaleX(1);
+}
+
+/* REQUEST TUTOR */
+
+.requestTutorPage,
+.loginPage,
+.signupPage,
+.changePasswordPage {
+  width: auto;
+  height: auto;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.requestTutorFormContainer,
+.loginFormContainer,
+.signupFormContainer,
+.changePasswordFormContainer {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  width: 500px;
+  height: auto;
+  padding: 20px;
+  border: 5px solid dodgerblue;
+  border-radius: 10px;
+  background-color: transparent;
+  backdrop-filter: blur(5px);
+}
+
+.requestTutorFormContainer #inputRequestTutor,
+.loginFormContainer #inputLogin,
+.signupFormContainer #inputSignup,
+.changePasswordFormContainer #inputChangePassword {
+  width: 450px;
+  height: 40px;
+  margin-top: 10px;
+  margin-bottom: 10px;
+  border: 2px solid grey;
+  border-radius: 5px;
+  padding-left: 10px;
+  font-size: 18px;
+  transform: translateX(-10px);
+}
+
+.requestTutorFormContainer input,
+button,
+.loginFormContainer input,
+button,
+.signupFormContainer input,
+button,
+.changePasswordFormContainer input,
+button {
+  width: 200px;
+  height: 50px;
+  border-radius: 8px;
+  border: none;
+  margin: 10px;
+}
+
+.requestTutorFormContainer button,
+.loginFormContainer button,
+.signupFormContainer button,
+.changePasswordFormContainer button {
+  background-color: lightskyblue;
+  color: white;
+  font-weight: 500;
+  font-size: 18px;
+  text-shadow: 0 0 2px #162938;
+}
+
+.requestTutorFormContainer button:hover,
+.loginFormContainer button:hover,
+.signupFormContainer button:hover,
+.changePasswordFormContainer button:hover {
+  cursor: pointer;
+  background-color: dodgerblue;
+}
+
+.requestTutorFormContainer input,
+.signupFormContainer input,
+changePasswordFormContainer input {
+  border: 2px solid grey;
+  padding-left: 10px;
+}
+
+.loginFormContainer input {
+  width: auto;
+  height: 40px;
+  margin-top: 10px;
+  margin-bottom: 10px;
+  border: 2px solid grey;
+  border-radius: 5px;
+  padding-left: 10px;
+  font-size: 18px;
+}
+
+.requestTutorButtonContainer,
+.loginButtonContainer,
+.signupButtonContainer,
+.saveChangesButtonContainer {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+}
+
+span,
+.errorMessage {
+  color: red;
+}
+
+/* BROWSE TUTEES */
+
+.browseTuteesPage {
+  width: auto;
+  height: auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.post:first-child {
+  margin-top: -50px;
+}
+.post:last-child {
+  margin-bottom: 30px;
+}
 
 .post {
   width: 400px;
@@ -69,7 +321,7 @@ body {
 }
 
 .post:hover {
-  box-shadow: 0px 0px 200px 0.5px palegoldenrod;
+  box-shadow: 0px 0px 50px 0.5px palegoldenrod;
 }
 
 .post .title {
@@ -105,6 +357,7 @@ body {
   place-content: center;
   padding: 20px;
   background-color: white;
+  overflow-wrap: break-word;
 }
 
 .post .footer {
@@ -137,10 +390,10 @@ body {
 }
 
 .likedBttn {
-  color: rgba(250, 250, 250, 1);
+  color: rgb(237, 16, 16);
 }
 .unlikeBttn {
-  color: rgb(237, 16, 16);
+  color: rgba(250, 250, 250);
 }
 
 .buttons {
@@ -151,240 +404,42 @@ body {
   width: 20px;
 }
 
-/* REQUEST TUTOR PAGE CSS */
+/* PROFILE PAGE */
 
-.requestTutorPage {
-  width: 100vw;
-  height: 100vh;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-.requestTutorFormContainer {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  width: 500px;
+.profilePage {
+  width: auto;
   height: auto;
-  padding: 20px;
-  border: 5px solid dodgerblue;
-  border-radius: 10px;
-  background-color: transparent;
-  backdrop-filter: blur(5px);
-  margin-top: -380px;
-}
-
-.requestTutorFormContainer #inputRequestTutor {
-  width: 450px;
-  height: 40px;
-  margin-top: 10px;
-  margin-bottom: 10px;
-  border: 2px solid grey;
-  border-radius: 5px;
-  padding-left: 10px;
-  font-size: 18px;
-  transform: translateX(-10px);
-}
-
-.requestTutorFormContainer input,
-button {
-  width: 200px;
-  height: 50px;
-  border-radius: 8px;
-  border: none;
-  margin: 10px;
-}
-
-.requestTutorFormContainer button {
-  background-color: lightskyblue;
-  color: white;
-  font-weight: 500;
-  font-size: 18px;
-  text-shadow: 0 0 2px #162938;
-}
-
-.requestTutorFormContainer button:hover {
-  cursor: pointer;
-  background-color: dodgerblue;
-}
-
-.requestTutorFormContainer input {
-  border: 2px solid grey;
-  padding-left: 10px;
-}
-
-.requestTutorButtonContainer {
   display: flex;
   justify-content: center;
-  width: 100%;
-}
-
-span {
-  color: red;
-}
-
-/* NAVBAR */
-
-.navbar {
-  top: 0;
-  left: 0;
-  width: 100%;
-  padding: 30px 60px;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  z-index: 99;
-}
-
-.navbar .username-link {
-  text-decoration: none;
-  color: inherit;
-}
-
-.navbar .username-link:hover {
-  text-decoration: none;
-  color: inherit;
-}
-
-.logo-container {
-  display: flex;
   align-items: center;
 }
 
-.logo {
-  width: 90px;
-  height: 90px;
-  border-radius: 50%;
-  margin-right: 20px;
+.basicInfo {
+  position: fixed;
+  top: 120px;
+  left: 0px;
+  width: 100%;
+  height: 80px;
+  display: flex;
+  align-items: center;
+  z-index: 98;
+  background-image: url("./images/Background.jpg");
+  background-size: cover;
+  background-attachment: fixed;
+  background-repeat: no-repeat;
 }
 
-.logo-text {
-  font-size: 1.8em;
-  color: #162938;
-  user-select: none;
-}
-
-.welcome-text {
-  font-size: 1.2em;
-  color: #162938;
-  user-select: none;
+.basicInfo h1 {
+  font-size: 1.3em;
   margin-left: 30px;
 }
 
-.links a {
-  position: relative;
-  font-size: 1.1em;
-  color: #162938;
-  text-decoration: none;
-  font-weight: 500;
-  margin-left: 40px;
-}
-
-.links a::after {
-  content: "";
-  position: absolute;
-  left: 0;
-  bottom: -6px;
-  width: 100%;
-  height: 3px;
-  background: rgba(22, 41, 56, 0.7);
-  border-radius: 5px;
-  transform-origin: right;
-  transform: scaleX(0);
-  transition: transform 0.5s;
-}
-
-.links a:hover::after {
-  transform-origin: left;
-  transform: scaleX(1);
-}
-
-.links a.active::after {
-  background-color: #162938;
-  transform-origin: left;
-  transform: scaleX(1);
-}
-
-.navbar button {
-  width: 65px;
-  height: 25px;
-  background-color: transparent;
-  border: none;
-  font-size: 1.1em;
-  color: #162938;
-  text-decoration: none;
-  font-weight: 500;
-  margin-left: 40px;
-  cursor: pointer;
-  padding: 0;
-  position: relative;
-}
-
-.navbar button::after {
-  content: "";
-  position: absolute;
-  left: 0;
-  bottom: -6px;
-  width: 100%;
-  height: 3px;
-  background: rgba(22, 41, 56, 0.7);
-  border-radius: 5px;
-  transform-origin: right;
-  transform: scaleX(0);
-  transition: transform 0.5s;
-}
-
-.navbar button:hover::after {
-  transform-origin: left;
-  transform: scaleX(1);
-}
-
-/* LOGIN */
-
-.loginContainer {
-  width: 100vw;
-  height: 100vh;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
-.loginFormContainer {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  width: 500px;
-  height: auto;
-  padding: 20px;
-  border: 5px solid dodgerblue;
-  border-radius: 10px;
-  background-color: transparent;
-  backdrop-filter: blur(5px);
-  margin-top: -380px;
-}
-
-.loginFormContainer #inputLogin {
-  width: 450px;
-  height: 40px;
-  margin-top: 10px;
-  margin-bottom: 10px;
-  border: 2px solid grey;
-  border-radius: 5px;
-  padding-left: 10px;
-  font-size: 18px;
-  transform: translateX(-10px);
-}
-
-.loginContainer input,
-button {
-  width: 200px;
+.basicInfo button {
+  width: 230px;
   height: 50px;
   border-radius: 8px;
   border: none;
   margin: 10px;
-}
-
-.loginContainer button {
   background-color: lightskyblue;
   color: white;
   font-weight: 500;
@@ -392,101 +447,15 @@ button {
   text-shadow: 0 0 2px #162938;
 }
 
-.loginContainer button:hover {
+.basicInfo button:hover {
   cursor: pointer;
   background-color: dodgerblue;
 }
 
-.loginContainer input {
-  width: auto;
-  height: 40px;
-  margin-top: 10px;
-  margin-bottom: 10px;
-  border: 2px solid grey;
-  border-radius: 5px;
-  padding-left: 10px;
-  font-size: 18px;
+.changePasswordButtonContainer {
+  margin-left: 20px;
 }
 
-.loginButtonContainer {
-  display: flex;
-  justify-content: center;
-  width: 100%;
-}
-
-.errorMessage {
-  color: red;
-}
-
-/* SIGNUP */
-
-.signupContainer {
-  width: 100vw;
-  height: 100vh;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
-.signupFormContainer {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  width: 500px;
-  height: auto;
-  padding: 20px;
-  border: 5px solid dodgerblue;
-  border-radius: 10px;
-  background-color: transparent;
-  backdrop-filter: blur(5px);
-  margin-top: -380px;
-}
-
-.signupFormContainer #inputSignup {
-  width: 450px;
-  height: 40px;
-  margin-top: 10px;
-  margin-bottom: 10px;
-  border: 2px solid grey;
-  border-radius: 5px;
-  padding-left: 10px;
-  font-size: 18px;
-  transform: translateX(-10px);
-}
-
-.signupContainer input,
-button {
-  width: 200px;
-  height: 50px;
-  border-radius: 8px;
-  border: none;
-  margin: 10px;
-}
-
-.signupContainer button {
-  background-color: lightskyblue;
-  color: white;
-  font-weight: 500;
-  font-size: 18px;
-  text-shadow: 0 0 2px #162938;
-}
-
-.signupContainer button:hover {
-  cursor: pointer;
-  background-color: dodgerblue;
-}
-
-.signupContainer input {
-  border: 2px solid grey;
-  padding-left: 10px;
-}
-
-.signupButtonContainer {
-  display: flex;
-  justify-content: center;
-  width: 100%;
-}
-
-.errorMessage {
-  color: red;
+.listOfPosts {
+  margin-top: 80px;
 }

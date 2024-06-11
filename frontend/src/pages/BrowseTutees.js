@@ -76,7 +76,7 @@ function BrowseTutees() {
   };
 
   return (
-    <div>
+    <div className="browseTuteesPage">
       {listOfPosts
         .slice()
         .reverse()
@@ -105,7 +105,7 @@ function BrowseTutees() {
                       likePost(post.id);
                     }}
                     className={
-                      likedPosts.includes(post.id) ? "unlikeBttn" : "likedBttn"
+                      likedPosts.includes(post.id) ? "likedBttn" : "unlikeBttn"
                     }
                   />
                 </div>

@@ -29,7 +29,7 @@ function Login() {
   };
 
   return (
-    <div className="loginContainer">
+    <div className="loginPage">
       <div className="loginFormContainer">
         <label>Username:</label>
         <input

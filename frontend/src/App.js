@@ -10,10 +10,12 @@ import {
 import Home from "./pages/Home";
 import RequestTutor from "./pages/RequestTutor";
 import BrowseTutees from "./pages/BrowseTutees";
+import StudyGroups from "./pages/StudyGroups";
 import Login from "./pages/Login";
 import Signup from "./pages/Signup";
 import PageNotFound from "./pages/PageNotFound";
 import Profile from "./pages/Profile";
+import ChangePassword from "./pages/ChangePassword";
 import Logo from "./images/Logo.jpg";
 import { AuthContext } from "./helpers/AuthContext";
 import { useState, useEffect } from "react";
@@ -76,23 +78,32 @@ function App() {
     navigate("/");
   };
 
+  const handleLogoutFromChangePassword = () => {
+    logout();
+  };
+
   return (
     <div className="App">
       <AuthContext.Provider value={{ authState, setAuthState }}>
         <div className="navbar">
           <div className="logo-container">
-            <img src={Logo} className="logo" alt="logo" />
-            <h2 className="logo-text">SilverLining</h2>
+            <Link to="/">
+              <img src={Logo} className="logo" alt="logo" />
+            </Link>
+            <h2 className="logo-text">
+              <Link to="/">SilverLining</Link>
+            </h2>
             {authState.status && (
               <h3 className="welcome-text">
                 Hello,{" "}
                 <Link to={`/profile/${authState.id}`} className="username-link">
                   {authState.username}
-                </Link>
+                </Link>{" "}
                 !
               </h3>
             )}
           </div>
+
           <div className="links">
             <Link to="/" className={currentPath === "/" ? "active" : ""}>
               Home
@@ -114,18 +125,32 @@ function App() {
               </>
             ) : (
               <>
-                <Link
-                  to="/requesttutor"
-                  className={currentPath === "/requesttutor" ? "active" : ""}
-                >
-                  Request for a Tutor
-                </Link>
-                <Link
-                  to="/browsetutees"
-                  className={currentPath === "/browsetutees" ? "active" : ""}
-                >
-                  Browse for Tutees
-                </Link>
+                {authState.status && (
+                  <>
+                    <Link
+                      to="/requesttutor"
+                      className={
+                        currentPath === "/requesttutor" ? "active" : ""
+                      }
+                    >
+                      Request for a Tutor
+                    </Link>
+                    <Link
+                      to="/browsetutees"
+                      className={
+                        currentPath === "/browsetutees" ? "active" : ""
+                      }
+                    >
+                      Browse for Tutees
+                    </Link>
+                    <Link
+                      to="/studygroups"
+                      className={currentPath === "/studygroups" ? "active" : ""}
+                    >
+                      Study Groups
+                    </Link>
+                  </>
+                )}
                 <button onClick={logout}>Log out</button>
               </>
             )}
@@ -135,9 +160,16 @@ function App() {
           <Route path="/" element={<Home />} />
           <Route path="/requesttutor" element={<RequestTutor />} />
           <Route path="/browsetutees" element={<BrowseTutees />} />
+          <Route path="/studygroups" element={<StudyGroups />} />
           <Route path="/login" element={<Login />} />
           <Route path="/signup" element={<Signup />} />
           <Route path="/profile/:id" element={<Profile />} />
+          <Route
+            path="/changepassword"
+            element={
+              <ChangePassword onLogout={handleLogoutFromChangePassword} />
+            }
+          />
           <Route path="*" element={<PageNotFound />} />
         </Routes>
       </AuthContext.Provider>
