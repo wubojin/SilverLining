@@ -7,23 +7,26 @@ import {
   useLocation,
   useNavigate,
 } from "react-router-dom";
+import Logo from "./images/Logo.jpg";
 import Home from "./pages/Home";
+import Login from "./pages/Login";
+import Signup from "./pages/Signup";
 import RequestTutor from "./pages/RequestTutor";
 import BrowseTutees from "./pages/BrowseTutees";
 import StudyGroups from "./pages/StudyGroups";
-import Login from "./pages/Login";
-import Signup from "./pages/Signup";
-import PageNotFound from "./pages/PageNotFound";
 import Profile from "./pages/Profile";
 import ChangePassword from "./pages/ChangePassword";
-import Logo from "./images/Logo.jpg";
+import ApplyTuition from "./pages/ApplyTuition";
+import PageNotFound from "./pages/PageNotFound";
 import { AuthContext } from "./helpers/AuthContext";
 import { useState, useEffect } from "react";
 import axios from "axios";
 
 function App() {
-  const [currentPath, setCurrentPath] = useState("");
   const location = useLocation();
+  const navigate = useNavigate();
+
+  const [currentPath, setCurrentPath] = useState("");
   const [authState, setAuthState] = useState(() => {
     const savedAuthState = localStorage.getItem("authState");
     return savedAuthState
@@ -65,8 +68,6 @@ function App() {
     localStorage.setItem("authState", JSON.stringify(authState));
   }, [location, authState]);
 
-  let navigate = useNavigate();
-
   const logout = () => {
     localStorage.removeItem("accessToken");
     localStorage.removeItem("authState");
@@ -90,9 +91,11 @@ function App() {
             <Link to="/">
               <img src={Logo} className="logo" alt="logo" />
             </Link>
+
             <h2 className="logo-text">
               <Link to="/">SilverLining</Link>
             </h2>
+
             {authState.status && (
               <h3 className="welcome-text">
                 Hello,{" "}
@@ -108,6 +111,7 @@ function App() {
             <Link to="/" className={currentPath === "/" ? "active" : ""}>
               Home
             </Link>
+
             {!authState.status ? (
               <>
                 <Link
@@ -116,6 +120,7 @@ function App() {
                 >
                   Log in
                 </Link>
+
                 <Link
                   to="/signup"
                   className={currentPath === "/signup" ? "active" : ""}
@@ -135,6 +140,7 @@ function App() {
                     >
                       Request for a Tutor
                     </Link>
+
                     <Link
                       to="/browsetutees"
                       className={
@@ -143,6 +149,7 @@ function App() {
                     >
                       Browse for Tutees
                     </Link>
+
                     <Link
                       to="/studygroups"
                       className={currentPath === "/studygroups" ? "active" : ""}
@@ -151,18 +158,20 @@ function App() {
                     </Link>
                   </>
                 )}
+
                 <button onClick={logout}>Log out</button>
               </>
             )}
           </div>
         </div>
+
         <Routes>
           <Route path="/" element={<Home />} />
+          <Route path="/login" element={<Login />} />
+          <Route path="/signup" element={<Signup />} />
           <Route path="/requesttutor" element={<RequestTutor />} />
           <Route path="/browsetutees" element={<BrowseTutees />} />
           <Route path="/studygroups" element={<StudyGroups />} />
-          <Route path="/login" element={<Login />} />
-          <Route path="/signup" element={<Signup />} />
           <Route path="/profile/:id" element={<Profile />} />
           <Route
             path="/changepassword"
@@ -170,6 +179,7 @@ function App() {
               <ChangePassword onLogout={handleLogoutFromChangePassword} />
             }
           />
+          <Route path="/applytuition" element={<ApplyTuition />} />
           <Route path="*" element={<PageNotFound />} />
         </Routes>
       </AuthContext.Provider>

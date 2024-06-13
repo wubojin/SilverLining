@@ -222,6 +222,15 @@ body {
   transform: translateX(-10px);
 }
 
+.requestTutorButtonContainer,
+.loginButtonContainer,
+.signupButtonContainer,
+.saveChangesButtonContainer {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+}
+
 .requestTutorFormContainer input,
 button,
 .loginFormContainer input,
@@ -274,15 +283,6 @@ changePasswordFormContainer input {
   font-size: 18px;
 }
 
-.requestTutorButtonContainer,
-.loginButtonContainer,
-.signupButtonContainer,
-.saveChangesButtonContainer {
-  display: flex;
-  justify-content: center;
-  width: 100%;
-}
-
 span,
 .errorMessage {
   color: red;
@@ -298,11 +298,21 @@ span,
   align-items: center;
 }
 
-.post:first-child {
+.postandapply:first-child {
   margin-top: -50px;
 }
-.post:last-child {
+.postandapply:last-child {
   margin-bottom: 30px;
+}
+
+.postandapply {
+  width: 400px;
+  height: auto;
+  border-radius: 10px;
+  display: flex;
+  flex-direction: column;
+  margin-top: 10px;
+  margin-bottom: 50px;
 }
 
 .post {
@@ -311,17 +321,12 @@ span,
   border-radius: 10px;
   display: flex;
   flex-direction: column;
-  margin-top: 50px;
   box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
   transition: box-shadow 0.5s;
   border-top-left-radius: 20px;
   border-top-right-radius: 20px;
   border-bottom-left-radius: 20px;
   border-bottom-right-radius: 20px;
-}
-
-.post:hover {
-  box-shadow: 0px 0px 50px 0.5px palegoldenrod;
 }
 
 .post .title {
@@ -367,9 +372,9 @@ span,
   padding-left: 15px;
   background-color: dodgerblue;
   color: white;
+  padding: 20px;
   border-bottom-left-radius: 20px;
   border-bottom-right-radius: 20px;
-  padding: 20px;
 }
 
 .footer .username {
@@ -402,6 +407,46 @@ span,
 
 .number {
   width: 20px;
+}
+
+.applyTuitionContainer {
+  display: flex;
+  align-items: center;
+  background-color: transparent;
+}
+
+.applyTuitionButton button {
+  transform: translateX(-10px);
+  width: 400px;
+  height: 50px;
+  border-radius: 8px;
+  border: none;
+  margin: 10px;
+  background-color: white;
+  color: dodgerblue;
+  text-shadow: 0 0 1px #162938;
+  font-weight: 500;
+  font-size: 16px;
+  box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+}
+
+.applyTuitionButton button:hover {
+  cursor: pointer;
+  background-color: dodgerblue;
+  color: white;
+  text-shadow: 0 0 2px #162938;
+}
+
+/* APPLY TUITION */
+
+.applyTuitionPage {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  align-items: flex-start;
+  width: 100%;
+  height: auto;
+  padding: 50px;
 }
 
 /* PROFILE PAGE */

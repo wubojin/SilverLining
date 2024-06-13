@@ -1,7 +1,7 @@
+import { AuthContext } from "../helpers/AuthContext";
+import { Link, useNavigate } from "react-router-dom";
 import React, { useEffect, useState, useContext } from "react";
 import axios from "axios";
-import { AuthContext } from "../helpers/AuthContext";
-import { Link } from "react-router-dom";
 import ThumbUpAltIcon from "@mui/icons-material/ThumbUpAlt";
 import DeleteIcon from "@mui/icons-material/Delete";
 
@@ -9,6 +9,7 @@ function BrowseTutees() {
   const [listOfPosts, setListOfPosts] = useState([]);
   const [likedPosts, setLikedPosts] = useState([]);
   const { authState } = useContext(AuthContext);
+  const navigate = useNavigate();
 
   useEffect(() => {
     axios
@@ -75,6 +76,10 @@ function BrowseTutees() {
       });
   };
 
+  const handleApply = (post) => {
+    navigate("/applytuition", { state: { post } });
+  };
+
   return (
     <div className="browseTuteesPage">
       {listOfPosts
@@ -82,37 +87,53 @@ function BrowseTutees() {
         .reverse()
         .map((post, key) => {
           return (
-            <div className="post" key={key}>
-              <div className="title">
-                {post.title}{" "}
-                {authState.username === post.username && (
-                  <DeleteIcon
-                    onClick={() => {
-                      deletePost(post.id);
-                    }}
-                    className="delete"
-                  />
-                )}
+            <div className="postandapply" key={key}>
+              <div className="post">
+                <div className="title">
+                  {post.title}{" "}
+                  {authState.username === post.username && (
+                    <DeleteIcon
+                      onClick={() => {
+                        deletePost(post.id);
+                      }}
+                      className="delete"
+                    />
+                  )}
+                </div>
+
+                <div className="body">{post.postText}</div>
+
+                <div className="footer">
+                  <div className="username">
+                    <Link to={`/profile/${post.UserId}`}>{post.username}</Link>
+                  </div>
+
+                  <div className="buttons">
+                    <ThumbUpAltIcon
+                      onClick={() => {
+                        likePost(post.id);
+                      }}
+                      className={
+                        likedPosts.includes(post.id)
+                          ? "likedBttn"
+                          : "unlikeBttn"
+                      }
+                    />
+                  </div>
+
+                  <div className="number">
+                    <label>{post.Likes.length}</label>
+                  </div>
+                </div>
               </div>
-              <div className="body">{post.postText}</div>
-              <div className="footer">
-                <div className="username">
-                  <Link to={`/profile/${post.UserId}`}>{post.username}</Link>
+
+              {authState.username !== post.username && (
+                <div className="applyTuitionContainer">
+                  <div className="applyTuitionButton">
+                    <button onClick={() => handleApply(post)}>Apply</button>
+                  </div>
                 </div>
-                <div className="buttons">
-                  <ThumbUpAltIcon
-                    onClick={() => {
-                      likePost(post.id);
-                    }}
-                    className={
-                      likedPosts.includes(post.id) ? "likedBttn" : "unlikeBttn"
-                    }
-                  />
-                </div>
-                <div className="number">
-                  <label>{post.Likes.length}</label>
-                </div>
-              </div>
+              )}
             </div>
           );
         })}

@@ -13,7 +13,7 @@ function RequestTutor() {
   };
 
   const onSubmit = (data) => {
-    const username = localStorage.getItem("username"); // Assuming username is stored in local storage
+    const username = localStorage.getItem("username");
     const postData = { ...data, username };
 
     axios
