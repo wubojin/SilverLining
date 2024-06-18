@@ -17,6 +17,7 @@ import StudyGroups from "./pages/StudyGroups";
 import Profile from "./pages/Profile";
 import ChangePassword from "./pages/ChangePassword";
 import ApplyTuition from "./pages/ApplyTuition";
+import Applications from "./pages/Applications";
 import PageNotFound from "./pages/PageNotFound";
 import { AuthContext } from "./helpers/AuthContext";
 import { useState, useEffect } from "react";
@@ -180,6 +181,7 @@ function App() {
             }
           />
           <Route path="/applytuition" element={<ApplyTuition />} />
+          <Route path="/applications/:id" element={<Applications />} />
           <Route path="*" element={<PageNotFound />} />
         </Routes>
       </AuthContext.Provider>

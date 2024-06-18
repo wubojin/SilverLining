@@ -181,6 +181,7 @@ body {
 /* REQUEST TUTOR */
 
 .requestTutorPage,
+.applyTuitionPage,
 .loginPage,
 .signupPage,
 .changePasswordPage {
@@ -192,6 +193,12 @@ body {
 }
 
 .requestTutorFormContainer,
+.applyTuitionFormContainer {
+  transform: translateY(-50px);
+}
+
+.requestTutorFormContainer,
+.applyTuitionFormContainer,
 .loginFormContainer,
 .signupFormContainer,
 .changePasswordFormContainer {
@@ -208,12 +215,13 @@ body {
 }
 
 .requestTutorFormContainer #inputRequestTutor,
+.applyTuitionFormContainer #inputApplyTuition,
 .loginFormContainer #inputLogin,
 .signupFormContainer #inputSignup,
 .changePasswordFormContainer #inputChangePassword {
   width: 450px;
   height: 40px;
-  margin-top: 10px;
+  margin-top: 2px;
   margin-bottom: 10px;
   border: 2px solid grey;
   border-radius: 5px;
@@ -223,6 +231,7 @@ body {
 }
 
 .requestTutorButtonContainer,
+.applyTuitionButtonContainer,
 .loginButtonContainer,
 .signupButtonContainer,
 .saveChangesButtonContainer {
@@ -232,6 +241,8 @@ body {
 }
 
 .requestTutorFormContainer input,
+button,
+.applyTuitionFormContainer input,
 button,
 .loginFormContainer input,
 button,
@@ -247,6 +258,7 @@ button {
 }
 
 .requestTutorFormContainer button,
+.applyTuitionFormContainer button,
 .loginFormContainer button,
 .signupFormContainer button,
 .changePasswordFormContainer button {
@@ -255,9 +267,11 @@ button {
   font-weight: 500;
   font-size: 18px;
   text-shadow: 0 0 2px #162938;
+  box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
 }
 
 .requestTutorFormContainer button:hover,
+.applyTuitionFormContainer button:hover,
 .loginFormContainer button:hover,
 .signupFormContainer button:hover,
 .changePasswordFormContainer button:hover {
@@ -266,21 +280,12 @@ button {
 }
 
 .requestTutorFormContainer input,
+.applyTuitionFormContainer input,
+.loginFormContainer input,
 .signupFormContainer input,
-changePasswordFormContainer input {
+.changePasswordFormContainer input {
   border: 2px solid grey;
   padding-left: 10px;
-}
-
-.loginFormContainer input {
-  width: auto;
-  height: 40px;
-  margin-top: 10px;
-  margin-bottom: 10px;
-  border: 2px solid grey;
-  border-radius: 5px;
-  padding-left: 10px;
-  font-size: 18px;
 }
 
 span,
@@ -290,7 +295,8 @@ span,
 
 /* BROWSE TUTEES */
 
-.browseTuteesPage {
+.browseTuteesPage,
+.applicationsContainer {
   width: auto;
   height: auto;
   display: flex;
@@ -305,19 +311,25 @@ span,
   margin-bottom: 30px;
 }
 
-.postandapply {
+.applicationandaccept:first-child {
+  margin-top: 0px;
+}
+
+.postandapply,
+.applicationandaccept {
   width: 400px;
   height: auto;
   border-radius: 10px;
   display: flex;
   flex-direction: column;
   margin-top: 10px;
-  margin-bottom: 50px;
+  margin-bottom: 30px;
 }
 
-.post {
+.post,
+.application {
   width: 400px;
-  height: 300px;
+  height: auto;
   border-radius: 10px;
   display: flex;
   flex-direction: column;
@@ -329,8 +341,9 @@ span,
   border-bottom-right-radius: 20px;
 }
 
-.post .title {
-  flex: 20%;
+.post .title,
+.application .title {
+  flex: 15%;
   background-color: dodgerblue;
   display: flex;
   align-items: center;
@@ -356,17 +369,25 @@ span,
   color: #162938;
 }
 
-.post .body {
-  flex: 60%;
+.post .body,
+.clickableBody,
+.application .body {
+  flex: 70%;
   display: grid;
-  place-content: center;
+  place-content: left;
   padding: 20px;
   background-color: white;
   overflow-wrap: break-word;
 }
 
-.post .footer {
-  flex: 20%;
+.post .clickableBody:hover {
+  box-shadow: 0px 0px 200px 0.5px palegoldenrod;
+  cursor: pointer;
+}
+
+.post .footer,
+.application .footer {
+  flex: 15%;
   display: flex;
   align-items: center;
   padding-left: 15px;
@@ -395,9 +416,18 @@ span,
 }
 
 .likedBttn {
+  cursor: pointer;
+  color: rgb(237, 16, 16);
+}
+.footer .buttons .likedBttn:hover {
+  cursor: pointer;
   color: rgb(237, 16, 16);
 }
 .unlikeBttn {
+  cursor: pointer;
+  color: rgba(250, 250, 250, 0.8);
+}
+.footer .buttons .unlikeBttn:hover {
   color: rgba(250, 250, 250);
 }
 
@@ -409,13 +439,16 @@ span,
   width: 20px;
 }
 
-.applyTuitionContainer {
+.applyTuitionContainer,
+.acceptApplicationContainer {
+  margin-top: 5px;
   display: flex;
   align-items: center;
   background-color: transparent;
 }
 
-.applyTuitionButton button {
+.applyTuitionButton button,
+.acceptApplicationButton button {
   transform: translateX(-10px);
   width: 400px;
   height: 50px;
@@ -430,7 +463,8 @@ span,
   box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
 }
 
-.applyTuitionButton button:hover {
+.applyTuitionButton button:hover,
+.acceptApplicationButton button:hover {
   cursor: pointer;
   background-color: dodgerblue;
   color: white;
@@ -439,14 +473,26 @@ span,
 
 /* APPLY TUITION */
 
-.applyTuitionPage {
+.applyTuitionPage,
+.postAndApplicationsPage {
   display: flex;
   flex-direction: row;
-  justify-content: space-around;
+  justify-content: center;
   align-items: flex-start;
   width: 100%;
   height: auto;
-  padding: 50px;
+}
+
+.postDetails {
+  transform: translateY(50px);
+}
+
+.postDetailsWithApplications {
+}
+
+.applicationFormContainer,
+.applicationsContainer {
+  margin-left: 150px;
 }
 
 /* PROFILE PAGE */
@@ -485,16 +531,19 @@ span,
   border-radius: 8px;
   border: none;
   margin: 10px;
-  background-color: lightskyblue;
-  color: white;
+  background-color: white;
+  color: dodgerblue;
+  text-shadow: 0 0 1px #162938;
   font-weight: 500;
   font-size: 18px;
-  text-shadow: 0 0 2px #162938;
+  box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
 }
 
 .basicInfo button:hover {
   cursor: pointer;
   background-color: dodgerblue;
+  color: white;
+  text-shadow: 0 0 2px #162938;
 }
 
 .changePasswordButtonContainer {

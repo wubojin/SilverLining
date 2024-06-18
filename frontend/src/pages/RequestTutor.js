@@ -8,8 +8,11 @@ function RequestTutor() {
   let navigate = useNavigate();
 
   const initialValues = {
-    title: "",
-    postText: "",
+    course: "",
+    rate: "",
+    schedule: "",
+    availability: "",
+    description: "",
   };
 
   const onSubmit = (data) => {
@@ -31,8 +34,11 @@ function RequestTutor() {
   };
 
   const validationSchema = Yup.object().shape({
-    title: Yup.string().required("Title is required"),
-    postText: Yup.string().required("Post text is required"),
+    course: Yup.string().required("Course code and name is required"),
+    rate: Yup.string().required("Rate is required"),
+    schedule: Yup.string().required("Schedule is required"),
+    availability: Yup.string().required("Availability is required"),
+    description: Yup.string().required("Description is required"),
   });
 
   return (
@@ -43,21 +49,45 @@ function RequestTutor() {
         validationSchema={validationSchema}
       >
         <Form className="requestTutorFormContainer">
-          <label>Title: </label>
-          <ErrorMessage name="title" component="span" />
+          <label>Course: </label>
+          <ErrorMessage name="course" component="span" />
           <Field
             autoComplete="off"
             id="inputRequestTutor"
-            name="title"
-            placeholder="(Eg. I need help in CS1010X)"
+            name="course"
+            placeholder="Eg. CS1101S Programming Methodology"
           />
-          <label>Post: </label>
-          <ErrorMessage name="postText" component="span" />
+          <label>Rate: </label>
+          <ErrorMessage name="rate" component="span" />
           <Field
             autoComplete="off"
             id="inputRequestTutor"
-            name="postText"
-            placeholder="(Eg. Budget: $X/h, Frequency: X times a week)"
+            name="rate"
+            placeholder="Eg. $80/h"
+          />
+          <label>Schedule: </label>
+          <ErrorMessage name="schedule" component="span" />
+          <Field
+            autoComplete="off"
+            id="inputRequestTutor"
+            name="schedule"
+            placeholder="Eg. Once a week, 1.5hr"
+          />
+          <label>Availability: </label>
+          <ErrorMessage name="availability" component="span" />
+          <Field
+            autoComplete="off"
+            id="inputRequestTutor"
+            name="availability"
+            placeholder="Eg. Mon/Wed/Fri 4-7pm"
+          />
+          <label>Description: </label>
+          <ErrorMessage name="description" component="span" />
+          <Field
+            autoComplete="off"
+            id="inputRequestTutor"
+            name="description"
+            placeholder="Type of help needed, Preference of tutor, etc."
           />
           <div className="requestTutorButtonContainer">
             <button type="submit">Request Tutor</button>

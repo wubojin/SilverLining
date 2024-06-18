@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useContext } from "react";
-import { useParams, useNavigate } from "react-router-dom";
+import { useParams, useNavigate, Link } from "react-router-dom";
 import { AuthContext } from "../helpers/AuthContext";
 import axios from "axios";
 import ThumbUpAltIcon from "@mui/icons-material/ThumbUpAlt";
@@ -9,32 +9,35 @@ function Profile() {
   let { id } = useParams();
   const [username, setUsername] = useState("");
   const [listOfPosts, setListOfPosts] = useState([]);
-  const [likedPosts, setLikedPosts] = useState(new Set());
+  const [likedPosts, setLikedPosts] = useState([]);
   const { authState } = useContext(AuthContext);
+  const navigate = useNavigate();
 
   useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const userInfoResponse = await axios.get(
-          `http://localhost:3001/auth/basicinfo/${id}`
-        );
-        setUsername(userInfoResponse.data.username);
+    // Fetch user info
+    axios
+      .get(`http://localhost:3001/auth/basicinfo/${id}`)
+      .then((response) => {
+        setUsername(response.data.username);
+      })
+      .catch((error) => {
+        console.error("Error fetching user info:", error);
+      });
 
-        const postsResponse = await axios.get(
-          `http://localhost:3001/posts/byUserId/${id}`
+    // Fetch posts by user ID
+    axios
+      .get(`http://localhost:3001/posts/byUserId/${id}`)
+      .then((response) => {
+        setListOfPosts(response.data);
+        setLikedPosts(
+          response.data.likedPosts.map((like) => {
+            return like.PostId;
+          })
         );
-        setListOfPosts(postsResponse.data || []);
-
-        const likesResponse = await axios.get(
-          `http://localhost:3001/likes/byUserId/${id}`
-        );
-        setLikedPosts(new Set(likesResponse.data.map((like) => like.PostId)));
-      } catch (error) {
-        console.error("Error fetching data:", error);
-      }
-    };
-
-    fetchData();
+      })
+      .catch((error) => {
+        console.error("Error fetching posts:", error);
+      });
   }, [id]);
 
   const deletePost = (postId) => {
@@ -50,43 +53,52 @@ function Profile() {
       });
   };
 
-  const likePost = async (postId) => {
-    try {
-      const response = await axios.post(
+  const likePost = (post, postId) => {
+    axios
+      .post(
         "http://localhost:3001/likes",
         { PostId: postId },
         { headers: { accessToken: localStorage.getItem("accessToken") } }
-      );
-
-      setListOfPosts((prevPosts) =>
-        prevPosts.map((post) => {
-          if (post.id === postId) {
-            const updatedLikes = response.data.liked
-              ? [...post.Likes, 0]
-              : post.Likes.slice(0, -1);
-
-            return { ...post, Likes: updatedLikes };
-          } else {
-            return post;
-          }
-        })
-      );
-
-      setLikedPosts((prevLikedPosts) => {
-        const updatedLikedPosts = new Set(prevLikedPosts);
-        if (updatedLikedPosts.has(postId)) {
-          updatedLikedPosts.delete(postId);
-        } else {
-          updatedLikedPosts.add(postId);
+      )
+      .then((response) => {
+        if (
+          !likedPosts.includes(post.id) &&
+          post.Likes.some((like) => like.UserId === authState.id)
+        ) {
+          likePost(post, post.id);
         }
-        return updatedLikedPosts;
+
+        setListOfPosts(
+          listOfPosts.map((post) => {
+            if (post.id === postId) {
+              if (response.data.liked) {
+                return { ...post, Likes: [...post.Likes, 0] };
+              } else {
+                const likesArray = post.Likes;
+                likesArray.pop();
+                return { ...post, Likes: likesArray };
+              }
+            } else {
+              return post;
+            }
+          })
+        );
+
+        if (likedPosts.includes(postId)) {
+          setLikedPosts(
+            likedPosts.filter((id) => {
+              return id !== postId;
+            })
+          );
+        } else {
+          setLikedPosts([...likedPosts, postId]);
+        }
       });
-    } catch (error) {
-      console.error("Error liking post:", error);
-    }
   };
 
-  let navigate = useNavigate();
+  const handleApply = (post) => {
+    navigate("/applytuition", { state: { post } });
+  };
 
   return (
     <div className="profilePage">
@@ -95,7 +107,6 @@ function Profile() {
         {authState.username === username && (
           <div className="changePasswordButtonContainer">
             <button onClick={() => navigate("/changepassword")}>
-              {" "}
               Change password
             </button>
           </div>
@@ -106,31 +117,65 @@ function Profile() {
           .slice()
           .reverse()
           .map((post, key) => (
-            <div className="post" key={key}>
-              <div className="title">
-                {post.title}{" "}
-                {authState.username === post.username && (
-                  <DeleteIcon
-                    onClick={() => deletePost(post.id)}
-                    className="delete"
-                  />
-                )}
-              </div>
-              <div className="body">{post.postText}</div>
-              <div className="footer">
-                <div className="username">{post.username}</div>
-                <div className="buttons">
-                  <ThumbUpAltIcon
-                    onClick={() => likePost(post.id)}
-                    className={
-                      likedPosts.has(post.id) ? "likedBttn" : "unlikeBttn"
-                    }
-                  />
+            <div className="postandapply" key={key}>
+              <div className="post">
+                <div className="title">
+                  {post.course}{" "}
+                  {authState.username === post.username && (
+                    <DeleteIcon
+                      onClick={() => deletePost(post.id)}
+                      className="delete"
+                    />
+                  )}
                 </div>
-                <div className="number">
-                  <label>{post.Likes.length}</label>
+                <div
+                  className={
+                    authState.username === post.username
+                      ? "clickableBody"
+                      : "body"
+                  }
+                  onClick={() => {
+                    authState.username === post.username &&
+                      navigate(`/applications/${post.id}`, { state: { post } });
+                  }}
+                >
+                  <p>
+                    <strong>Rate:</strong> {post.rate}
+                    <br />
+                    <strong>Schedule:</strong> {post.schedule}
+                    <br />
+                    <strong>Availability:</strong> {post.availability}
+                    <br />
+                    <strong>Description:</strong> {post.description}
+                  </p>
+                </div>
+                <div className="footer">
+                  <div className="username">
+                    <Link to={`/profile/${post.UserId}`}>{post.username}</Link>
+                  </div>
+                  <div className="buttons">
+                    <ThumbUpAltIcon
+                      onClick={() => likePost(post, post.id)}
+                      className={
+                        likedPosts.includes(post.id) ||
+                        post.Likes.some((like) => like.UserId === authState.id)
+                          ? "likedBttn"
+                          : "unlikeBttn"
+                      }
+                    />
+                  </div>
+                  <div className="number">
+                    <label>{post.Likes.length}</label>
+                  </div>
                 </div>
               </div>
+              {authState.username !== post.username && (
+                <div className="applyTuitionContainer">
+                  <div className="applyTuitionButton">
+                    <button onClick={() => handleApply(post)}>Apply</button>
+                  </div>
+                </div>
+              )}
             </div>
           ))}
       </div>

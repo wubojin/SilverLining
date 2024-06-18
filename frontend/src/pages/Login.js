@@ -33,6 +33,7 @@ function Login() {
       <div className="loginFormContainer">
         <label>Username:</label>
         <input
+          autoComplete="off"
           type="text"
           id="inputLogin"
           onChange={(event) => {
@@ -41,6 +42,7 @@ function Login() {
         />
         <label>Password:</label>
         <input
+          autoComplete="off"
           type="password"
           id="inputLogin"
           onChange={(event) => {

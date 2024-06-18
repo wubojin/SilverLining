@@ -9,7 +9,7 @@ function BrowseTutees() {
   const [listOfPosts, setListOfPosts] = useState([]);
   const [likedPosts, setLikedPosts] = useState([]);
   const { authState } = useContext(AuthContext);
-  const navigate = useNavigate();
+  let navigate = useNavigate();
 
   useEffect(() => {
     axios
@@ -76,10 +76,6 @@ function BrowseTutees() {
       });
   };
 
-  const handleApply = (post) => {
-    navigate("/applytuition", { state: { post } });
-  };
-
   return (
     <div className="browseTuteesPage">
       {listOfPosts
@@ -90,7 +86,7 @@ function BrowseTutees() {
             <div className="postandapply" key={key}>
               <div className="post">
                 <div className="title">
-                  {post.title}{" "}
+                  {post.course}{" "}
                   {authState.username === post.username && (
                     <DeleteIcon
                       onClick={() => {
@@ -101,7 +97,23 @@ function BrowseTutees() {
                   )}
                 </div>
 
-                <div className="body">{post.postText}</div>
+                <div
+                  className="body"
+                  onClick={() => {
+                    authState.username === post.username &&
+                      navigate(`/applications/${post.id}`, { state: { post } });
+                  }}
+                >
+                  <p>
+                    <strong>Rate:</strong> {post.rate}
+                    <br />
+                    <strong>Schedule:</strong> {post.schedule}
+                    <br />
+                    <strong>Availability:</strong> {post.availability}
+                    <br />
+                    <strong>Description:</strong> {post.description}
+                  </p>
+                </div>
 
                 <div className="footer">
                   <div className="username">
@@ -130,7 +142,13 @@ function BrowseTutees() {
               {authState.username !== post.username && (
                 <div className="applyTuitionContainer">
                   <div className="applyTuitionButton">
-                    <button onClick={() => handleApply(post)}>Apply</button>
+                    <button
+                      onClick={() => {
+                        navigate("/applytuition", { state: { post } });
+                      }}
+                    >
+                      Apply
+                    </button>
                   </div>
                 </div>
               )}

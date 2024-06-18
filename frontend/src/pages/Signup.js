@@ -61,7 +61,7 @@ function Signup() {
                 autoComplete="off"
                 id="inputSignup"
                 name="username"
-                placeholder="(Eg. user123)"
+                placeholder="Eg. mandyliu"
                 onChange={(event) => {
                   setError("");
                   setFieldValue("username", event.target.value);

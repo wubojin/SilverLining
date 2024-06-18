@@ -1,5 +1,5 @@
 module.exports = (sequelize, DataTypes) => {
-  const Posts = sequelize.define("Posts", {
+  const Applications = sequelize.define("Applications", {
     course: {
       type: DataTypes.STRING,
       allowNull: false,
@@ -16,7 +16,7 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.STRING,
       allowNull: false,
     },
-    description: {
+    experience: {
       type: DataTypes.STRING,
       allowNull: false,
     },
@@ -26,15 +26,5 @@ module.exports = (sequelize, DataTypes) => {
     },
   });
 
-  Posts.associate = (models) => {
-    Posts.hasMany(models.Likes, {
-      onDelete: "cascade",
-    });
-
-    Posts.hasMany(models.Applications, {
-      onDelete: "cascade",
-    });
-  };
-
-  return Posts;
+  return Applications;
 };

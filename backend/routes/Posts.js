@@ -17,6 +17,12 @@ router.post("/", validateToken, async (req, res) => {
   res.json(post);
 });
 
+router.get("/byId/:id", async (req, res) => {
+  const id = req.params.id;
+  const post = await Posts.findByPk(id);
+  res.json(post);
+});
+
 router.get("/byUserId/:id", async (req, res) => {
   const id = req.params.id;
   const listOfPosts = await Posts.findAll({

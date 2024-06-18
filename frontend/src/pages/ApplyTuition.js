@@ -1,34 +1,32 @@
-import React from "react";
-import { useLocation } from "react-router-dom";
+import React, { useContext } from "react";
+import { Link, useNavigate, useLocation } from "react-router-dom";
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import * as Yup from "yup";
 import axios from "axios";
-import { Link, useNavigate } from "react-router-dom";
 import ThumbUpAltIcon from "@mui/icons-material/ThumbUpAlt";
 import DeleteIcon from "@mui/icons-material/Delete";
 import { AuthContext } from "../helpers/AuthContext";
-import { useContext } from "react";
 
 function ApplyTuition() {
   const location = useLocation();
-  const { post } = location.state;
+  const { post } = location.state || {};
   const { authState } = useContext(AuthContext);
-  const navigate = useNavigate();
+  let navigate = useNavigate();
 
   const initialValues = {
-    title: post.title,
-    postText: post.postText,
-    username: authState.username,
+    course: post.course,
+    rate: "",
+    schedule: "",
+    availability: "",
+    experience: "",
   };
 
-  const validationSchema = Yup.object().shape({
-    title: Yup.string().required("Title is required"),
-    postText: Yup.string().required("Post text is required"),
-  });
-
   const onSubmit = (data) => {
+    const username = localStorage.getItem("username");
+    const applicationData = { ...data, username, PostId: post.id };
+
     axios
-      .post("http://localhost:3001/applications", data, {
+      .post("http://localhost:3001/applications", applicationData, {
         headers: { accessToken: localStorage.getItem("accessToken") },
       })
       .then((response) => {
@@ -36,23 +34,47 @@ function ApplyTuition() {
           console.log(response.data.error);
         } else {
           console.log("Application submitted");
-          navigate("/browsetutees");
+          navigate(`/applications/${post.id}`, { state: { post } });
         }
       });
   };
+
+  const validationSchema = Yup.object().shape({
+    course: Yup.string().required("Course code and name is required"),
+    rate: Yup.string().required("Rate is required"),
+    schedule: Yup.string().required("Schedule is required"),
+    availability: Yup.string().required("Availability is required"),
+    experience: Yup.string().required("Experience is required"),
+  });
 
   return (
     <div className="applyTuitionPage">
       <div className="postDetails">
         <div className="post">
           <div className="title">
-            {post.title}
+            {post.course}
             {authState.username === post.username && (
               <DeleteIcon className="delete" />
             )}
           </div>
 
-          <div className="body">{post.postText}</div>
+          <div
+            className="body"
+            onClick={() => {
+              authState.username === post.username &&
+                navigate(`/applications/${post.id}`, { state: { post } });
+            }}
+          >
+            <p>
+              <strong>Rate:</strong> {post.rate}
+              <br />
+              <strong>Schedule:</strong> {post.schedule}
+              <br />
+              <strong>Availability:</strong> {post.availability}
+              <br />
+              <strong>Description:</strong> {post.description}
+            </p>
+          </div>
 
           <div className="footer">
             <div className="username">
@@ -60,7 +82,13 @@ function ApplyTuition() {
             </div>
 
             <div className="buttons">
-              <ThumbUpAltIcon className="unlikeBttn" />
+              <ThumbUpAltIcon
+                className={
+                  post.Likes.some((like) => like.UserId === authState.id)
+                    ? "likedBttn"
+                    : "unlikeBttn"
+                }
+              />
             </div>
 
             <div className="number">
@@ -76,24 +104,48 @@ function ApplyTuition() {
           onSubmit={onSubmit}
           validationSchema={validationSchema}
         >
-          <Form className="requestTutorFormContainer">
-            <label>Title: </label>
-            <ErrorMessage name="title" component="span" />
+          <Form className="applyTuitionFormContainer">
+            <label>Course: </label>
+            <ErrorMessage name="course" component="span" />
             <Field
               autoComplete="off"
-              id="inputRequestTutor"
-              name="title"
-              placeholder="(Eg. I need help in CS1010X)"
+              id="inputApplyTuition"
+              name="course"
+              placeholder="Eg. CS1101S Programming Methodology"
             />
-            <label>Post: </label>
-            <ErrorMessage name="postText" component="span" />
+            <label>Rate: </label>
+            <ErrorMessage name="rate" component="span" />
             <Field
               autoComplete="off"
-              id="inputRequestTutor"
-              name="postText"
-              placeholder="(Eg. Budget: $X/h, Frequency: X times a week)"
+              id="inputApplyTuition"
+              name="rate"
+              placeholder="Eg. $80/h"
             />
-            <div className="requestTutorButtonContainer">
+            <label>Schedule: </label>
+            <ErrorMessage name="schedule" component="span" />
+            <Field
+              autoComplete="off"
+              id="inputApplyTuition"
+              name="schedule"
+              placeholder="Eg. Once a week, 1.5hr"
+            />
+            <label>Availability: </label>
+            <ErrorMessage name="availability" component="span" />
+            <Field
+              autoComplete="off"
+              id="inputApplyTuition"
+              name="availability"
+              placeholder="Eg. Mon/Wed/Fri 4-7pm"
+            />
+            <label>Experience: </label>
+            <ErrorMessage name="experience" component="span" />
+            <Field
+              autoComplete="off"
+              id="inputApplyTuition"
+              name="experience"
+              placeholder="Course proficiency, Past tutoring jobs, etc."
+            />
+            <div className="applyTuitionButtonContainer">
               <button type="submit">Submit</button>
             </div>
           </Form>
