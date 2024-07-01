@@ -1,11 +1,12 @@
 import React, { useEffect, useState, useContext } from "react";
 import axios from "axios";
-import { Link, useLocation } from "react-router-dom";
+import { Link, useLocation, useParams } from "react-router-dom";
 import { AuthContext } from "../helpers/AuthContext";
 import ThumbUpAltIcon from "@mui/icons-material/ThumbUpAlt";
 import DeleteIcon from "@mui/icons-material/Delete";
 
 function Applications() {
+  let { id } = useParams();
   const location = useLocation();
   const { post } = location.state || {};
   const [listOfApplications, setListOfApplications] = useState([]);
@@ -13,13 +14,13 @@ function Applications() {
 
   useEffect(() => {
     axios
-      .get("http://localhost:3001/applications", {
+      .get(`http://localhost:3001/applications/${id}`, {
         headers: { accessToken: localStorage.getItem("accessToken") },
       })
       .then((response) => {
         setListOfApplications(response.data);
       });
-  }, []);
+  }, [id]);
 
   return (
     <div className="postAndApplicationsPage">
@@ -67,33 +68,39 @@ function Applications() {
       </div>
 
       <div className="applicationsContainer">
-        {listOfApplications.map((application, key) => {
-          return (
-            <div className="applicationandaccept" key={key}>
-              <div className="application">
-                <div className="title">{application.course}</div>
-                <div className="body">
-                  <p>
-                    <strong>Rate:</strong> {application.rate}
-                    <br />
-                    <strong>Schedule:</strong> {application.schedule}
-                    <br />
-                    <strong>Availability:</strong> {application.availability}
-                    <br />
-                    <strong>Experience:</strong> {application.experience}
-                  </p>
+        {listOfApplications.length === 0 ? (
+          <h3 className="noApplications">No applications yet</h3>
+        ) : (
+          listOfApplications.map((application, key) => {
+            return (
+              <div className="applicationandaccept" key={key}>
+                <div className="application">
+                  <div className="title">{application.course}</div>
+                  <div className="body">
+                    <p>
+                      <strong>Rate:</strong> {application.rate}
+                      <br />
+                      <strong>Schedule:</strong> {application.schedule}
+                      <br />
+                      <strong>Availability:</strong> {application.availability}
+                      <br />
+                      <strong>Experience:</strong> {application.experience}
+                    </p>
+                  </div>
+                  <div className="footer">{application.username}</div>
                 </div>
-                <div className="footer">{application.username}</div>
-              </div>
 
-              <div className="acceptApplicationContainer">
-                <div className="acceptApplicationButton">
-                  <button>Accept</button>
-                </div>
+                {authState.username === post.username && (
+                  <div className="acceptApplicationContainer">
+                    <div className="acceptApplicationButton">
+                      <button>Accept</button>
+                    </div>
+                  </div>
+                )}
               </div>
-            </div>
-          );
-        })}
+            );
+          })
+        )}
       </div>
     </div>
   );

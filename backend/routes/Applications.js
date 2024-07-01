@@ -3,8 +3,11 @@ const router = express.Router();
 const { Applications } = require("../models");
 const { validateToken } = require("../middlewares/AuthMiddleware");
 
-router.get("/", validateToken, async (req, res) => {
-  const listOfApplications = await Applications.findAll();
+router.get("/:postId", validateToken, async (req, res) => {
+  const postId = req.params.postId;
+  const listOfApplications = await Applications.findAll({
+    where: { PostId: postId },
+  });
   res.json(listOfApplications);
 });
 

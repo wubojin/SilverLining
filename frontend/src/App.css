@@ -69,6 +69,28 @@ body {
   background-repeat: no-repeat;
 }
 
+.profileNav {
+  margin-top: 130px;
+  margin-left: 556px;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 60%;
+  padding: 0px 90px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  z-index: 99;
+  background-image: url("./images/Background.jpg");
+  background-size: cover;
+  background-attachment: fixed;
+  background-repeat: no-repeat;
+}
+
+.profileNav a .line-break {
+  display: block;
+}
+
 .navbar .username-link {
   text-decoration: none;
   color: inherit;
@@ -110,7 +132,8 @@ body {
   margin-left: 30px;
 }
 
-.links a {
+.links a,
+.profileNav a {
   position: relative;
   font-size: 1em;
   color: #162938;
@@ -119,7 +142,8 @@ body {
   margin-left: 30px;
 }
 
-.links a::after {
+.links a::after,
+.profileNav a::after {
   content: "";
   position: absolute;
   left: 0;
@@ -133,12 +157,14 @@ body {
   transition: transform 0.5s;
 }
 
-.links a:hover::after {
+.links a:hover::after,
+.profileNav a:hover::after {
   transform-origin: left;
   transform: scaleX(1);
 }
 
-.links a.active::after {
+.links a.active::after,
+.profileNav a.active::after {
   background-color: #162938;
   transform-origin: left;
   transform: scaleX(1);
@@ -184,7 +210,8 @@ body {
 .applyTuitionPage,
 .loginPage,
 .signupPage,
-.changePasswordPage {
+.changePasswordPage,
+.createStudyGroupPage {
   width: auto;
   height: auto;
   display: flex;
@@ -201,7 +228,8 @@ body {
 .applyTuitionFormContainer,
 .loginFormContainer,
 .signupFormContainer,
-.changePasswordFormContainer {
+.changePasswordFormContainer,
+.studygroupFormContainer {
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -218,7 +246,8 @@ body {
 .applyTuitionFormContainer #inputApplyTuition,
 .loginFormContainer #inputLogin,
 .signupFormContainer #inputSignup,
-.changePasswordFormContainer #inputChangePassword {
+.changePasswordFormContainer #inputChangePassword,
+.studygroupFormContainer #inputCreateStudyGroup {
   width: 450px;
   height: 40px;
   margin-top: 2px;
@@ -234,7 +263,8 @@ body {
 .applyTuitionButtonContainer,
 .loginButtonContainer,
 .signupButtonContainer,
-.saveChangesButtonContainer {
+.saveChangesButtonContainer,
+.createStudyGroupButtonContainer {
   display: flex;
   justify-content: center;
   width: 100%;
@@ -249,6 +279,8 @@ button,
 .signupFormContainer input,
 button,
 .changePasswordFormContainer input,
+button,
+.studygroupFormContainer input,
 button {
   width: 200px;
   height: 50px;
@@ -261,7 +293,8 @@ button {
 .applyTuitionFormContainer button,
 .loginFormContainer button,
 .signupFormContainer button,
-.changePasswordFormContainer button {
+.changePasswordFormContainer button,
+.studygroupFormContainer button {
   background-color: lightskyblue;
   color: white;
   font-weight: 500;
@@ -274,7 +307,8 @@ button {
 .applyTuitionFormContainer button:hover,
 .loginFormContainer button:hover,
 .signupFormContainer button:hover,
-.changePasswordFormContainer button:hover {
+.changePasswordFormContainer button:hover,
+.studygroupFormContainer button:hover {
   cursor: pointer;
   background-color: dodgerblue;
 }
@@ -283,7 +317,8 @@ button {
 .applyTuitionFormContainer input,
 .loginFormContainer input,
 .signupFormContainer input,
-.changePasswordFormContainer input {
+.changePasswordFormContainer input,
+.studygroupFormContainer input {
   border: 2px solid grey;
   padding-left: 10px;
 }
@@ -296,7 +331,8 @@ span,
 /* BROWSE TUTEES */
 
 .browseTuteesPage,
-.applicationsContainer {
+.applicationsContainer,
+.studygroupsContainer {
   width: auto;
   height: auto;
   display: flex;
@@ -304,10 +340,12 @@ span,
   align-items: center;
 }
 
-.postandapply:first-child {
+.postandapply:first-child,
+.groupandjoin:first-child {
   margin-top: -50px;
 }
-.postandapply:last-child {
+.postandapply:last-child,
+.groupandjoin:last-child {
   margin-bottom: 30px;
 }
 
@@ -316,7 +354,8 @@ span,
 }
 
 .postandapply,
-.applicationandaccept {
+.applicationandaccept,
+.groupandjoin {
   width: 400px;
   height: auto;
   border-radius: 10px;
@@ -327,14 +366,15 @@ span,
 }
 
 .post,
-.application {
+.application,
+.group {
   width: 400px;
   height: auto;
   border-radius: 10px;
   display: flex;
   flex-direction: column;
   box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
-  transition: box-shadow 0.5s;
+  transition: box-shadow 0.5s ease;
   border-top-left-radius: 20px;
   border-top-right-radius: 20px;
   border-bottom-left-radius: 20px;
@@ -342,7 +382,8 @@ span,
 }
 
 .post .title,
-.application .title {
+.application .title,
+.group .title {
   flex: 15%;
   background-color: dodgerblue;
   display: flex;
@@ -371,7 +412,8 @@ span,
 
 .post .body,
 .clickableBody,
-.application .body {
+.application .body,
+.group .body {
   flex: 70%;
   display: grid;
   place-content: left;
@@ -386,7 +428,8 @@ span,
 }
 
 .post .footer,
-.application .footer {
+.application .footer,
+.group .footer {
   flex: 15%;
   display: flex;
   align-items: center;
@@ -440,7 +483,9 @@ span,
 }
 
 .applyTuitionContainer,
-.acceptApplicationContainer {
+.acceptApplicationContainer,
+.createGroupContainer,
+.joinGroupContainer {
   margin-top: 5px;
   display: flex;
   align-items: center;
@@ -448,7 +493,9 @@ span,
 }
 
 .applyTuitionButton button,
-.acceptApplicationButton button {
+.acceptApplicationButton button,
+.createGroupButton button,
+.joinGroupButton button {
   transform: translateX(-10px);
   width: 400px;
   height: 50px;
@@ -464,7 +511,9 @@ span,
 }
 
 .applyTuitionButton button:hover,
-.acceptApplicationButton button:hover {
+.acceptApplicationButton button:hover,
+.createGroupButton button:hover,
+.joinGroupButton button:hover {
   cursor: pointer;
   background-color: dodgerblue;
   color: white;
@@ -484,15 +533,24 @@ span,
 }
 
 .postDetails {
-  transform: translateY(50px);
+  transform: translateY(30px);
+}
+
+.applicationFormContainer {
+  margin-left: 150px;
 }
 
 .postDetailsWithApplications {
+  position: fixed;
+  transform: translateX(-275px);
 }
 
-.applicationFormContainer,
 .applicationsContainer {
-  margin-left: 150px;
+  transform: translateX(275px);
+}
+
+.noApplications {
+  transform: translateY(100px);
 }
 
 /* PROFILE PAGE */
@@ -505,7 +563,8 @@ span,
   align-items: center;
 }
 
-.basicInfo {
+.basicInfo,
+.subHeader {
   position: fixed;
   top: 120px;
   left: 0px;
@@ -520,12 +579,13 @@ span,
   background-repeat: no-repeat;
 }
 
-.basicInfo h1 {
-  font-size: 1.3em;
+.basicInfo h3,
+.subHeader h3 {
   margin-left: 30px;
 }
 
-.basicInfo button {
+.basicInfo button,
+.subHeader button {
   width: 230px;
   height: 50px;
   border-radius: 8px;
@@ -539,17 +599,20 @@ span,
   box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
 }
 
-.basicInfo button:hover {
+.basicInfo button:hover,
+.subHeader button:hover {
   cursor: pointer;
   background-color: dodgerblue;
   color: white;
   text-shadow: 0 0 2px #162938;
 }
 
-.changePasswordButtonContainer {
+.changePasswordButtonContainer,
+.formStudyGroupButtonContainer {
   margin-left: 20px;
 }
 
-.listOfPosts {
+.listOfPosts,
+.studygroupsContainer {
   margin-top: 80px;
 }

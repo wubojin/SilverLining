@@ -14,8 +14,13 @@ import Signup from "./pages/Signup";
 import RequestTutor from "./pages/RequestTutor";
 import BrowseTutees from "./pages/BrowseTutees";
 import StudyGroups from "./pages/StudyGroups";
+import StudyGroupForm from "./pages/StudyGroupForm";
 import Profile from "./pages/Profile";
 import ChangePassword from "./pages/ChangePassword";
+import TutorRequests from "./helpers/TutorRequests";
+import TuitionApplications from "./helpers/TuitionApplications";
+import FormedStudyGroups from "./helpers/FormedStudyGroups";
+import JoinedStudyGroups from "./helpers/JoinedStudyGroups";
 import ApplyTuition from "./pages/ApplyTuition";
 import Applications from "./pages/Applications";
 import PageNotFound from "./pages/PageNotFound";
@@ -173,7 +178,25 @@ function App() {
           <Route path="/requesttutor" element={<RequestTutor />} />
           <Route path="/browsetutees" element={<BrowseTutees />} />
           <Route path="/studygroups" element={<StudyGroups />} />
-          <Route path="/profile/:id" element={<Profile />} />
+          <Route path="/studygroupform" element={<StudyGroupForm />} />
+          <Route path="/profile/:id" element={<Profile />}>
+            <Route
+              path="/profile/:id/tutor-requests"
+              element={<TutorRequests />}
+            />
+            <Route
+              path="/profile/:id/tuition-applications"
+              element={<TuitionApplications />}
+            />
+            <Route
+              path="/profile/:id/formed-study-groups"
+              element={<FormedStudyGroups />}
+            />
+            <Route
+              path="/profile/:id/joined-study-groups"
+              element={<JoinedStudyGroups />}
+            />
+          </Route>
           <Route
             path="/changepassword"
             element={

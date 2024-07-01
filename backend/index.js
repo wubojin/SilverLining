@@ -16,6 +16,8 @@ const likesRouter = require("./routes/Likes");
 app.use("/likes", likesRouter);
 const applicationsRouter = require("./routes/Applications");
 app.use("/applications", applicationsRouter);
+const studygroupsRouter = require("./routes/StudyGroups");
+app.use("/studygroups", studygroupsRouter);
 
 db.sequelize.sync().then(() => {
   app.listen(3001, () => {

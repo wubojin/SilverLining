@@ -98,7 +98,11 @@ function BrowseTutees() {
                 </div>
 
                 <div
-                  className="body"
+                  className={
+                    authState.username === post.username
+                      ? "clickableBody"
+                      : "body"
+                  }
                   onClick={() => {
                     authState.username === post.username &&
                       navigate(`/applications/${post.id}`, { state: { post } });

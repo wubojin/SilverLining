@@ -22,6 +22,10 @@ module.exports = (sequelize, DataTypes) => {
     Users.hasMany(models.Applications, {
       onDelete: "cascade",
     });
+
+    Users.hasMany(models.StudyGroups, {
+      onDelete: "cascade",
+    });
   };
 
   return Users;
