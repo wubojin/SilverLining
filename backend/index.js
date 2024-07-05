@@ -1,10 +1,15 @@
 const express = require("express");
 const app = express();
 const cors = require("cors");
-const PORT = 3001;
+const PORT = process.env.PORT || 3001;
 
 app.use(express.json());
 app.use(cors());
+
+app.use(express.static("public"));
+app.get("/", (req, res) => {
+  res.sendFile(__dirname + "/public/index.html");
+});
 
 const db = require("./models");
 
@@ -20,6 +25,6 @@ app.use("/applications", applicationsRouter);
 const studygroupsRouter = require("./routes/StudyGroups");
 app.use("/studygroups", studygroupsRouter);
 
-app.listen(process.env.PORT || PORT, () => {
+app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`);
 });
