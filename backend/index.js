@@ -8,6 +8,8 @@ app.use(express.json());
 app.use(cors());
 
 app.use(express.static(path.join(__dirname, "..", "frontend", "public")));
+app.use("/src", express.static(path.join(__dirname, "..", "frontend", "src")));
+
 app.get("/", (req, res) => {
   res.sendFile(path.join(__dirname, "..", "frontend", "public", "index.html"));
 });
