@@ -20,7 +20,7 @@
     {
       "src": "./Logo.png",
       "type": "image/png",
-      "sizes": "your-size"
+      "sizes": "500x500"
     }
   ],
   "start_url": "/",
