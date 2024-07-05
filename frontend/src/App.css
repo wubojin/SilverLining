@@ -70,13 +70,12 @@ body {
 }
 
 .profileNav {
-  margin-top: 130px;
-  margin-left: 556px;
+  margin-top: 135px;
+  margin-right: 43px;
   position: fixed;
   top: 0;
-  left: 0;
-  width: 60%;
-  padding: 0px 90px;
+  right: 0;
+  width: 630px;
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -132,14 +131,22 @@ body {
   margin-left: 30px;
 }
 
-.links a,
-.profileNav a {
+.links a {
   position: relative;
   font-size: 1em;
   color: #162938;
   text-decoration: none;
   font-weight: 500;
   margin-left: 30px;
+}
+
+.profileNav a {
+  position: relative;
+  font-size: 1em;
+  color: #162938;
+  text-decoration: none;
+  font-weight: 500;
+  margin-left: -3px;
 }
 
 .links a::after,
