@@ -20,7 +20,8 @@ function RequestTutor() {
     const postData = { ...data, username };
 
     axios
-      .post("http://localhost:3001/posts", postData, {
+      .post("/posts", postData, {
+        baseURL: process.env.REACT_APP_BACKEND_URL,
         headers: { accessToken: localStorage.getItem("accessToken") },
       })
       .then((response) => {

@@ -1,20 +1,30 @@
 import React, { useEffect, useState, useContext } from "react";
 import axios from "axios";
-import { Link, useLocation, useParams } from "react-router-dom";
+import {
+  Link,
+  useLocation,
+  useParams,
+  useNavigate,
+  Outlet,
+} from "react-router-dom";
 import { AuthContext } from "../helpers/AuthContext";
+import ProfileNav from "../helpers/ProfileNav";
 import ThumbUpAltIcon from "@mui/icons-material/ThumbUpAlt";
 import DeleteIcon from "@mui/icons-material/Delete";
 
 function Applications() {
   let { id } = useParams();
   const location = useLocation();
+  const navigate = useNavigate();
+  const fromProfile = location.state?.fromProfile || false;
   const { post } = location.state || {};
   const [listOfApplications, setListOfApplications] = useState([]);
   const { authState } = useContext(AuthContext);
 
   useEffect(() => {
     axios
-      .get(`http://localhost:3001/applications/${id}`, {
+      .get(`/applications/${id}`, {
+        baseURL: process.env.REACT_APP_BACKEND_URL,
         headers: { accessToken: localStorage.getItem("accessToken") },
       })
       .then((response) => {
@@ -24,6 +34,27 @@ function Applications() {
 
   return (
     <div className="postAndApplicationsPage">
+      {fromProfile && (
+        <div className="profilePage">
+          <div className="basicInfo">
+            {authState.username !== post.username && (
+              <h3>User: {post.username}</h3>
+            )}
+
+            {authState.username === post.username && (
+              <div className="changePasswordButtonContainer">
+                <button onClick={() => navigate("/changepassword")}>
+                  Change password
+                </button>
+              </div>
+            )}
+          </div>
+
+          <ProfileNav />
+          <Outlet />
+        </div>
+      )}
+
       <div className="postDetailsWithApplications">
         <div className="post">
           <div className="title">

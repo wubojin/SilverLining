@@ -13,7 +13,8 @@ function BrowseTutees() {
 
   useEffect(() => {
     axios
-      .get("http://localhost:3001/posts", {
+      .get("/posts", {
+        baseURL: process.env.REACT_APP_BACKEND_URL,
         headers: { accessToken: localStorage.getItem("accessToken") },
       })
       .then((response) => {
@@ -28,7 +29,8 @@ function BrowseTutees() {
 
   const deletePost = (id) => {
     axios
-      .delete(`http://localhost:3001/posts/${id}`, {
+      .delete(`/posts/${id}`, {
+        baseURL: process.env.REACT_APP_BACKEND_URL,
         headers: { accessToken: localStorage.getItem("accessToken") },
       })
       .then(() => {
@@ -43,9 +45,12 @@ function BrowseTutees() {
   const likePost = (postId) => {
     axios
       .post(
-        "http://localhost:3001/likes",
+        "/likes",
         { PostId: postId },
-        { headers: { accessToken: localStorage.getItem("accessToken") } }
+        {
+          baseURL: process.env.REACT_APP_BACKEND_URL,
+          headers: { accessToken: localStorage.getItem("accessToken") },
+        }
       )
       .then((response) => {
         setListOfPosts(
@@ -105,7 +110,9 @@ function BrowseTutees() {
                   }
                   onClick={() => {
                     authState.username === post.username &&
-                      navigate(`/applications/${post.id}`, { state: { post } });
+                      navigate(`/applications/${post.id}`, {
+                        state: { post, fromProfile: false },
+                      });
                   }}
                 >
                   <p>

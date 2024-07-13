@@ -17,12 +17,13 @@ function ChangePassword({ onLogout }) {
   const onSubmit = (values) => {
     axios
       .put(
-        "http://localhost:3001/auth/changepassword",
+        "/auth/changepassword",
         {
           oldPassword: values.oldPassword,
           newPassword: values.newPassword,
         },
         {
+          baseURL: process.env.REACT_APP_BACKEND_URL,
           headers: {
             accessToken: localStorage.getItem("accessToken"),
           },

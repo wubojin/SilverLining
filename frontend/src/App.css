@@ -62,7 +62,7 @@ body {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  z-index: 99;
+  z-index: 98;
   background-image: url("./images/Background.jpg");
   background-size: cover;
   background-attachment: fixed;
@@ -70,7 +70,7 @@ body {
 }
 
 .profileNav {
-  margin-top: 135px;
+  margin-top: 115px;
   margin-right: 43px;
   position: fixed;
   top: 0;
@@ -112,23 +112,10 @@ body {
   margin-right: 15px;
 }
 
-.logo-text {
-  font-size: 1.4em;
-  color: #162938;
-  user-select: none;
-}
-
-.logo-text a {
-  text-decoration: none;
-  color: inherit;
-  cursor: pointer;
-}
-
 .welcome-text {
-  font-size: 1em;
   color: #162938;
   user-select: none;
-  margin-left: 30px;
+  margin-left: 10px;
 }
 
 .links a {
@@ -573,13 +560,13 @@ span,
 .basicInfo,
 .subHeader {
   position: fixed;
-  top: 120px;
+  top: 100px;
   left: 0px;
   width: 100%;
-  height: 80px;
+  height: 100px;
   display: flex;
   align-items: center;
-  z-index: 98;
+  z-index: 99;
   background-image: url("./images/Background.jpg");
   background-size: cover;
   background-attachment: fixed;
@@ -617,6 +604,10 @@ span,
 .changePasswordButtonContainer,
 .formStudyGroupButtonContainer {
   margin-left: 20px;
+}
+
+.changePasswordButtonContainer {
+  transform: translateY(-7px);
 }
 
 .listOfPosts,

@@ -16,14 +16,18 @@ function Signup() {
   let navigate = useNavigate();
 
   const onSubmit = (data) => {
-    axios.post("http://localhost:3001/auth/signup", data).then((response) => {
-      if (response.data.error) {
-        setError(response.data.error);
-      } else {
-        console.log(data);
-        navigate("/login");
-      }
-    });
+    axios
+      .post("/auth/signup", data, {
+        baseURL: process.env.REACT_APP_BACKEND_URL,
+      })
+      .then((response) => {
+        if (response.data.error) {
+          setError(response.data.error);
+        } else {
+          console.log(data);
+          navigate("/login");
+        }
+      });
   };
 
   const validationSchema = Yup.object().shape({

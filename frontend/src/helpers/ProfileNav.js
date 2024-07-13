@@ -1,22 +1,33 @@
 import React from "react";
-import { NavLink } from "react-router-dom";
+import { NavLink, useParams } from "react-router-dom";
 
 function ProfileNav() {
+  let { id } = useParams();
+
   return (
     <div className="profileNav">
-      <NavLink to="tutor-requests" activeClassName="active">
+      <NavLink to={`/profile/${id}/tutor-requests`} activeClassName="active">
         <div className="line-break">Tutor</div>
         <div className="line-break">Requests</div>{" "}
       </NavLink>
-      <NavLink to="tuition-applications" activeClassName="active">
+      <NavLink
+        to={`/profile/${id}/tuition-applications`}
+        activeClassName="active"
+      >
         <div className="line-break">Tuition</div>
         <div className="line-break">Applications</div>{" "}
       </NavLink>
-      <NavLink to="formed-study-groups" activeClassName="active">
+      <NavLink
+        to={`/profile/${id}/formed-study-groups`}
+        activeClassName="active"
+      >
         <div className="line-break">Formed</div>
         <div className="line-break">Study Groups</div>{" "}
       </NavLink>
-      <NavLink to="joined-study-groups" activeClassName="active">
+      <NavLink
+        to={`/profile/${id}/joined-study-groups`}
+        activeClassName="active"
+      >
         <div className="line-break">Joined</div>
         <div className="line-break">Study Groups</div>{" "}
       </NavLink>

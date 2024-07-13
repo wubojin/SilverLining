@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useContext } from "react";
-import { useParams, useNavigate } from "react-router-dom";
+import { useParams, useNavigate, Outlet } from "react-router-dom";
 import { AuthContext } from "../helpers/AuthContext";
 import ProfileNav from "../helpers/ProfileNav";
 import axios from "axios";
@@ -12,7 +12,9 @@ function Profile() {
 
   useEffect(() => {
     axios
-      .get(`http://localhost:3001/auth/basicinfo/${id}`)
+      .get(`/auth/basicinfo/${id}`, {
+        baseURL: process.env.REACT_APP_BACKEND_URL,
+      })
       .then((response) => {
         setUsername(response.data.username);
       })
@@ -24,7 +26,8 @@ function Profile() {
   return (
     <div className="profilePage">
       <div className="basicInfo">
-        <h3>Username: {username}</h3>
+        {authState.username !== username && <h3>User: {username}</h3>}
+
         {authState.username === username && (
           <div className="changePasswordButtonContainer">
             <button onClick={() => navigate("/changepassword")}>
@@ -35,6 +38,7 @@ function Profile() {
       </div>
 
       <ProfileNav />
+      <Outlet />
     </div>
   );
 }

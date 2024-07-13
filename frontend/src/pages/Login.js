@@ -13,19 +13,21 @@ function Login() {
 
   const login = () => {
     const data = { username: username, password: password };
-    axios.post("http://localhost:3001/auth/login", data).then((response) => {
-      if (response.data.error) {
-        setError(response.data.error);
-      } else {
-        localStorage.setItem("accessToken", response.data.token);
-        setAuthState({
-          username: response.data.username,
-          id: response.data.id,
-          status: true,
-        });
-        navigate("/");
-      }
-    });
+    axios
+      .post("/auth/login", data, { baseURL: process.env.REACT_APP_BACKEND_URL })
+      .then((response) => {
+        if (response.data.error) {
+          setError(response.data.error);
+        } else {
+          localStorage.setItem("accessToken", response.data.token);
+          setAuthState({
+            username: response.data.username,
+            id: response.data.id,
+            status: true,
+          });
+          navigate("/");
+        }
+      });
   };
 
   return (

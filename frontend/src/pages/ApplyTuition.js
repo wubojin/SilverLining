@@ -26,7 +26,8 @@ function ApplyTuition() {
     const applicationData = { ...data, username, PostId: post.id };
 
     axios
-      .post("http://localhost:3001/applications", applicationData, {
+      .post("/applications", applicationData, {
+        baseURL: process.env.REACT_APP_BACKEND_URL,
         headers: { accessToken: localStorage.getItem("accessToken") },
       })
       .then((response) => {

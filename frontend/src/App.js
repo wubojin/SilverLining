@@ -98,10 +98,6 @@ function App() {
               <img src={Logo} className="logo" alt="logo" />
             </Link>
 
-            <h2 className="logo-text">
-              <Link to="/">SilverLining</Link>
-            </h2>
-
             {authState.status && (
               <h3 className="welcome-text">
                 Hello,{" "}

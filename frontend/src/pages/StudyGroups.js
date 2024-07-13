@@ -10,7 +10,8 @@ function StudyGroups() {
 
   useEffect(() => {
     axios
-      .get("http://localhost:3001/studygroups", {
+      .get("/studygroups", {
+        baseURL: process.env.REACT_APP_BACKEND_URL,
         headers: { accessToken: localStorage.getItem("accessToken") },
       })
       .then((response) => {

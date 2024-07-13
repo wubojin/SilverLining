@@ -14,7 +14,8 @@ function StudyGroupForm() {
 
   const onSubmit = (data) => {
     axios
-      .post("http://localhost:3001/studygroups", data, {
+      .post("/studygroups", data, {
+        baseURL: process.env.REACT_APP_BACKEND_URL,
         headers: { accessToken: localStorage.getItem("accessToken") },
       })
       .then((response) => {

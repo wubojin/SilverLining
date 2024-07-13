@@ -1,6 +1,6 @@
 import React, { useEffect, useState, useContext } from "react";
 import { useParams, useNavigate, Link } from "react-router-dom";
-import { AuthContext } from "../helpers/AuthContext";
+import { AuthContext } from "./AuthContext";
 import axios from "axios";
 import ThumbUpAltIcon from "@mui/icons-material/ThumbUpAlt";
 import DeleteIcon from "@mui/icons-material/Delete";
@@ -113,7 +113,9 @@ function TutorRequests() {
                 }
                 onClick={() => {
                   authState.username === post.username &&
-                    navigate(`/applications/${post.id}`, { state: { post } });
+                    navigate(`/applications/${post.id}`, {
+                      state: { post, fromProfile: true },
+                    });
                 }}
               >
                 <p>
