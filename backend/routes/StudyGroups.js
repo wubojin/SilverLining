@@ -16,4 +16,24 @@ router.post("/", validateToken, async (req, res) => {
   res.json(studygroup);
 });
 
+router.get("/byUserId/:id", async (req, res) => {
+  const id = req.params.id;
+  const listOfStudyGroups = await StudyGroups.findAll({
+    where: { UserId: id },
+  });
+  res.json({ listOfStudyGroups });
+});
+
+router.delete("/:studygroupId", validateToken, async (req, res) => {
+  const studygroupId = req.params.studygroupId;
+
+  await StudyGroups.destroy({
+    where: {
+      id: studygroupId,
+    },
+  });
+
+  res.json("DELETED SUCCESSFULLY");
+});
+
 module.exports = router;

@@ -2,6 +2,7 @@ import React, { useEffect, useState, useContext } from "react";
 import { AuthContext } from "../helpers/AuthContext";
 import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
+import DeleteIcon from "@mui/icons-material/Delete";
 
 function StudyGroups() {
   const [listOfStudyGroups, setListOfStudyGroups] = useState([]);
@@ -22,6 +23,21 @@ function StudyGroups() {
       });
   }, []);
 
+  const deleteGroup = (id) => {
+    axios
+      .delete(`/studygroups/${id}`, {
+        baseURL: process.env.REACT_APP_BACKEND_URL,
+        headers: { accessToken: localStorage.getItem("accessToken") },
+      })
+      .then(() => {
+        setListOfStudyGroups(
+          listOfStudyGroups.filter((val) => {
+            return val.id !== id;
+          })
+        );
+      });
+  };
+
   return (
     <div className="studygroupsPage">
       <div className="subHeader">
@@ -41,12 +57,40 @@ function StudyGroups() {
             return (
               <div className="groupandjoin" key={key}>
                 <div className="group">
-                  <div className="title">{group.groupname}</div>
-                  <div className="body">{group.objective}</div>
+                  <div className="title">
+                    {group.groupname}
+                    {authState.username === group.username && (
+                      <DeleteIcon
+                        onClick={() => {
+                          deleteGroup(group.id);
+                        }}
+                        className="delete"
+                      />
+                    )}
+                  </div>
+
+                  <div
+                    className={
+                      authState.username === group.username
+                        ? "clickableBody"
+                        : "body"
+                    }
+                    onClick={() => {
+                      authState.username === group.username &&
+                        navigate(`/messages/${group.id}`, {
+                          state: { group },
+                        });
+                    }}
+                  >
+                    <p>
+                      <strong>Objective:</strong> {group.objective}
+                    </p>
+                  </div>
+
                   <div className="footer">
                     {" "}
                     <div className="username">
-                      <Link to={`/profile/${group.UserId}`}>
+                      <Link to={`/profile/${group.UserId}/formed-study-groups`}>
                         {group.username}
                       </Link>
                     </div>
@@ -56,7 +100,15 @@ function StudyGroups() {
                 {authState.username !== group.username && (
                   <div className="joinGroupContainer">
                     <div className="joinGroupButton">
-                      <button>Join</button>
+                      <button
+                        onClick={() => {
+                          navigate(`/messages/${group.id}`, {
+                            state: { group },
+                          });
+                        }}
+                      >
+                        Join group
+                      </button>
                     </div>
                   </div>
                 )}

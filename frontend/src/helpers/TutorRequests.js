@@ -14,7 +14,9 @@ function TutorRequests() {
 
   useEffect(() => {
     axios
-      .get(`http://localhost:3001/posts/byUserId/${id}`)
+      .get(`/posts/byUserId/${id}`, {
+        baseURL: process.env.REACT_APP_BACKEND_URL,
+      })
       .then((response) => {
         setListOfPosts(response.data);
         setLikedPosts(
@@ -30,7 +32,8 @@ function TutorRequests() {
 
   const deletePost = (postId) => {
     axios
-      .delete(`http://localhost:3001/posts/${postId}`, {
+      .delete(`/posts/${postId}`, {
+        baseURL: process.env.REACT_APP_BACKEND_URL,
         headers: { accessToken: localStorage.getItem("accessToken") },
       })
       .then(() => {
@@ -44,9 +47,12 @@ function TutorRequests() {
   const likePost = (post, postId) => {
     axios
       .post(
-        "http://localhost:3001/likes",
+        "/likes",
         { PostId: postId },
-        { headers: { accessToken: localStorage.getItem("accessToken") } }
+        {
+          baseURL: process.env.REACT_APP_BACKEND_URL,
+          headers: { accessToken: localStorage.getItem("accessToken") },
+        }
       )
       .then((response) => {
         if (
@@ -90,73 +96,77 @@ function TutorRequests() {
 
   return (
     <div className="listOfPosts">
-      {listOfPosts
-        .slice()
-        .reverse()
-        .map((post, key) => (
-          <div className="postandapply" key={key}>
-            <div className="post">
-              <div className="title">
-                {post.course}{" "}
-                {authState.username === post.username && (
-                  <DeleteIcon
-                    onClick={() => deletePost(post.id)}
-                    className="delete"
-                  />
-                )}
-              </div>
-              <div
-                className={
-                  authState.username === post.username
-                    ? "clickableBody"
-                    : "body"
-                }
-                onClick={() => {
-                  authState.username === post.username &&
-                    navigate(`/applications/${post.id}`, {
-                      state: { post, fromProfile: true },
-                    });
-                }}
-              >
-                <p>
-                  <strong>Rate:</strong> {post.rate}
-                  <br />
-                  <strong>Schedule:</strong> {post.schedule}
-                  <br />
-                  <strong>Availability:</strong> {post.availability}
-                  <br />
-                  <strong>Description:</strong> {post.description}
-                </p>
-              </div>
-              <div className="footer">
-                <div className="username">
-                  <Link to={`/profile/${post.UserId}`}>{post.username}</Link>
+      {listOfPosts.length === 0 ? (
+        <h3>No tutor requests yet</h3>
+      ) : (
+        listOfPosts
+          .slice()
+          .reverse()
+          .map((post, key) => (
+            <div className="postandapply" key={key}>
+              <div className="post">
+                <div className="title">
+                  {post.course}{" "}
+                  {authState.username === post.username && (
+                    <DeleteIcon
+                      onClick={() => deletePost(post.id)}
+                      className="delete"
+                    />
+                  )}
                 </div>
-                <div className="buttons">
-                  <ThumbUpAltIcon
-                    onClick={() => likePost(post, post.id)}
-                    className={
-                      likedPosts.includes(post.id) ||
-                      post.Likes.some((like) => like.UserId === authState.id)
-                        ? "likedBttn"
-                        : "unlikeBttn"
-                    }
-                  />
+                <div
+                  className={
+                    authState.username === post.username
+                      ? "clickableBody"
+                      : "body"
+                  }
+                  onClick={() => {
+                    authState.username === post.username &&
+                      navigate(`/applications/${post.id}`, {
+                        state: { post, fromProfile: true },
+                      });
+                  }}
+                >
+                  <p>
+                    <strong>Rate:</strong> {post.rate}
+                    <br />
+                    <strong>Schedule:</strong> {post.schedule}
+                    <br />
+                    <strong>Availability:</strong> {post.availability}
+                    <br />
+                    <strong>Description:</strong> {post.description}
+                  </p>
                 </div>
-                <div className="number">
-                  <label>{post.Likes.length}</label>
+                <div className="footer">
+                  <div className="username">
+                    <Link to={`/profile/${post.UserId}`}>{post.username}</Link>
+                  </div>
+                  <div className="buttons">
+                    <ThumbUpAltIcon
+                      onClick={() => likePost(post, post.id)}
+                      className={
+                        likedPosts.includes(post.id) ||
+                        post.Likes.some((like) => like.UserId === authState.id)
+                          ? "likedBttn"
+                          : "unlikeBttn"
+                      }
+                    />
+                  </div>
+                  <div className="number">
+                    <label>{post.Likes.length}</label>
+                  </div>
                 </div>
               </div>
+              {authState.username !== post.username && (
+                <div className="applyTuitionContainer">
+                  <div className="applyTuitionButton">
+                    <button onClick={() => handleApply(post)}>Apply</button>
+                  </div>
+                </div>
+              )}
             </div>
-            {authState.username !== post.username && (
-              <div className="applyTuitionContainer">
-                <div className="applyTuitionButton">
-                  <button onClick={() => handleApply(post)}>Apply</button>
-                </div>
-              </div>
-            )}
-          </div>
-        ))}
+          ))
+      )}
     </div>
   );
 }

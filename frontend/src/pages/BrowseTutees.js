@@ -128,7 +128,9 @@ function BrowseTutees() {
 
                 <div className="footer">
                   <div className="username">
-                    <Link to={`/profile/${post.UserId}`}>{post.username}</Link>
+                    <Link to={`/profile/${post.UserId}/tutor-requests`}>
+                      {post.username}
+                    </Link>
                   </div>
 
                   <div className="buttons">

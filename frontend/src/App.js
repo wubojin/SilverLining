@@ -23,6 +23,7 @@ import FormedStudyGroups from "./helpers/FormedStudyGroups";
 import JoinedStudyGroups from "./helpers/JoinedStudyGroups";
 import ApplyTuition from "./pages/ApplyTuition";
 import Applications from "./pages/Applications";
+import Messages from "./pages/Messages";
 import PageNotFound from "./pages/PageNotFound";
 import { AuthContext } from "./helpers/AuthContext";
 import { useState, useEffect } from "react";
@@ -46,7 +47,8 @@ function App() {
 
   useEffect(() => {
     axios
-      .get("https://localhost:3001/auth/auth", {
+      .get("/auth/auth", {
+        baseURL: process.env.REACT_APP_BACKEND_URL,
         headers: {
           accessToken: localStorage.getItem("accessToken"),
         },
@@ -201,6 +203,7 @@ function App() {
           />
           <Route path="/applytuition" element={<ApplyTuition />} />
           <Route path="/applications/:id" element={<Applications />} />
+          <Route path="/messages/:id" element={<Messages />} />
           <Route path="*" element={<PageNotFound />} />
         </Routes>
       </AuthContext.Provider>

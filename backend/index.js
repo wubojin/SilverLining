@@ -27,7 +27,11 @@ const applicationsRouter = require("./routes/Applications");
 app.use("/applications", applicationsRouter);
 const studygroupsRouter = require("./routes/StudyGroups");
 app.use("/studygroups", studygroupsRouter);
+const messagesRouter = require("./routes/Messages");
+app.use("/messages", messagesRouter);
 
-app.listen(PORT, () => {
-  console.log(`Server running on port ${PORT}`);
+db.sequelize.sync().then(() => {
+  app.listen(PORT, () => {
+    console.log(`Server running on port ${PORT}`);
+  });
 });
