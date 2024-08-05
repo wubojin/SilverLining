@@ -1,18 +1,12 @@
 const express = require("express");
 const app = express();
 const cors = require("cors");
-const path = require("path");
 const PORT = process.env.PORT || 3001;
+
+require("dotenv").config();
 
 app.use(express.json());
 app.use(cors());
-
-app.use(express.static(path.join(__dirname, "..", "frontend", "public")));
-app.use("/src", express.static(path.join(__dirname, "..", "frontend", "src")));
-
-app.get("/", (req, res) => {
-  res.sendFile(path.join(__dirname, "..", "frontend", "public", "index.html"));
-});
 
 const db = require("./models");
 
@@ -30,8 +24,13 @@ app.use("/studygroups", studygroupsRouter);
 const messagesRouter = require("./routes/Messages");
 app.use("/messages", messagesRouter);
 
-db.sequelize.sync().then(() => {
-  app.listen(PORT, () => {
-    console.log(`Server running on port ${PORT}`);
+db.sequelize
+  .sync()
+  .then(() => {
+    app.listen(PORT, () => {
+      console.log(`Server running on port ${PORT}`);
+    });
+  })
+  .catch((err) => {
+    console.log(err);
   });
-});
